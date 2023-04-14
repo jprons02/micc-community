@@ -1,15 +1,23 @@
+//https://blog.webdevsimplified.com/2022-07/react-folder-structure/
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './assets/styles/css/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { SnackbarProvider } from './lib/notistack';
+import { LoginProvider } from './context/loginContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <LoginProvider>
+    <SnackbarProvider maxSnack={3}>
+      <App />
+    </SnackbarProvider>
+    </LoginProvider>
   </React.StrictMode>
 );
 
