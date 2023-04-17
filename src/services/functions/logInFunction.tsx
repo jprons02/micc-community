@@ -1,26 +1,34 @@
 import { getAllItemsAPI } from '../APIs/getAllItemsAPI';
+import { compareHashedPasswords } from './compareHashedPasswords';
 
 // This function is used to check if the user exists in the database and if the password is correct
 // If the user exists and the password in that same index is correct, return "Success"
 
-export const logInFunction = async (record: any) => {
+export const logInFunction = async (formInput: any) => {
   try {
     const allItems = await getAllItemsAPI();
     // Find index of the given email in array. We want to compare the password and tribalId at the same index.
-    const findIndex = (element: any) => {
+    const findIndex = (record: any) => {
       for (let i = 0; i < allItems.length; i++) {
-        if (allItems[i].email === element.email) {
+        if (allItems[i].email === record.email) {
           return i;
         }
       }
       return -1; // Return -1 if element not found
     };
 
-    if (findIndex(record) === -1) {
+    const dbPassword = allItems[findIndex(formInput)].password;
+    const dbTribalId = allItems[findIndex(formInput)].tribalId;
+    const passwordMatch = await compareHashedPasswords(
+      dbPassword,
+      formInput.password
+    );
+
+    if (findIndex(formInput) === -1) {
       return 'Email not found';
-    } else if (allItems[findIndex(record)].password !== record.password) {
+    } else if (passwordMatch !== 'match') {
       return 'Incorrect password';
-    } else if (allItems[findIndex(record)].tribalId !== record.tribalId) {
+    } else if (dbTribalId !== formInput.tribalId) {
       return 'Incorrect tribalId';
     } else {
       return 'Success';
