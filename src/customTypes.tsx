@@ -5,3 +5,8 @@ export type User = {
   tribalId: string;
   password: string;
 };
+
+export type BcryptObj = {
+  password: string;
+  functionName: string;
+};

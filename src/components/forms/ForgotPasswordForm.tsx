@@ -20,14 +20,15 @@ const ForgotPasswordForm: React.FC = () => {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     // Perform form submission logic or validation here
-    console.log('Form Data:', formData);
   };
 
   return (
     <div>
       <CssBaseline />
       <form onSubmit={handleSubmit}>
-      <Typography style={{marginTop: '15px'}} variant="body2">Please enter in your email address to reset your password</Typography>
+        <Typography style={{ marginTop: '15px' }} variant="body2">
+          Please enter in your email address to reset your password
+        </Typography>
         <TextField
           required
           label="Email"

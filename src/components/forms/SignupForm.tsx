@@ -50,7 +50,6 @@ const SignupForm: React.FC = () => {
       return;
     } else {
       setLoading(true);
-      console.log('Form Data:', formData);
       const user = {
         firstName: formData.firstName,
         lastName: formData.lastName,

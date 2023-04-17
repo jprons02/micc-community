@@ -1,6 +1,7 @@
 import { getAllItemsAPI } from '../APIs/getAllItemsAPI';
 import { addUserAPI } from '../APIs/addUserAPI';
 import { User } from '../../customTypes';
+import { encryptPasswordAPI } from '../APIs/bcryptAPIs';
 
 // Need to look through all data for existing tribal ID.
 export const addUserFunction = async (user: User) => {
@@ -19,6 +20,9 @@ export const addUserFunction = async (user: User) => {
     if (findIndex(user) !== -1) {
       return 'Tribal ID already exists';
     } else {
+      // Encrypt password before adding to database
+      const hashedPassword = await encryptPasswordAPI(user.password);
+      user.password = hashedPassword;
       return await addUserAPI(user);
     }
   } catch (error) {
