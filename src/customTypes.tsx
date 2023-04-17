@@ -1,4 +1,4 @@
-export type User = {
+export type UserType = {
   firstName: string;
   lastName: string;
   email: string;
@@ -6,7 +6,8 @@ export type User = {
   password: string;
 };
 
-export type BcryptObj = {
+export type LoginFormType = {
+  email: string;
+  tribalId: string;
   password: string;
-  functionName: string;
 };

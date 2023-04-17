@@ -1,14 +1,14 @@
 import { getAllItemsAPI } from '../APIs/getAllItemsAPI';
 import { addUserAPI } from '../APIs/addUserAPI';
-import { User } from '../../customTypes';
+import { UserType } from '../../customTypes';
 import { encryptPasswordAPI } from '../APIs/bcryptAPIs';
 
 // Need to look through all data for existing tribal ID.
-export const addUserFunction = async (user: User) => {
+export const addUserFunction = async (user: UserType) => {
   try {
     const allItems = await getAllItemsAPI();
     // Find index of the given tribalId in array. We want to compare the password and tribalId at the same index.
-    const findIndex = (user: User) => {
+    const findIndex = (user: UserType) => {
       for (let i = 0; i < allItems.length; i++) {
         if (allItems[i].tribalId === user.tribalId) {
           return i;
