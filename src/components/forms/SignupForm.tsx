@@ -41,6 +41,14 @@ const SignupForm: React.FC = () => {
         setConfirmPasswordInputError(false);
       }
     }
+
+    if (name === 'password') {
+      if (formData.confirmPassword !== value) {
+        setConfirmPasswordInputError(true);
+      } else {
+        setConfirmPasswordInputError(false);
+      }
+    }
   };
 
   const handleSubmit = async (event: any) => {
@@ -58,7 +66,7 @@ const SignupForm: React.FC = () => {
         password: formData.password,
       };
       const response = await addUserFunction(user);
-      if (response === 'success') {
+      if (response === 'Item added') {
         enqueueSnackbar("You've successfully signed up!", {
           variant: 'success',
         });

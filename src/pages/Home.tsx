@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/loginContext';
 
@@ -9,17 +9,14 @@ import Button from '@mui/material/Button';
 import logo from '../assets/media/logos/logo.svg';
 
 const Home: React.FC = () => {
-
   const isLoggedIn = useContext(LoginContext);
   let navigate = useNavigate();
 
   useEffect(() => {
-    if(!isLoggedIn) {
+    if (!isLoggedIn) {
       navigate('/login');
     }
   }, [isLoggedIn]);
-
-  console.log("isLoggedIn from Home page: ", isLoggedIn);
 
   return (
     <div className="App">
@@ -36,8 +33,7 @@ const Home: React.FC = () => {
         >
           Learn React
         </a>
-        <div style={{margin: '40px 0'}}>
-      </div>
+        <div style={{ margin: '40px 0' }}></div>
       </header>
     </div>
   );

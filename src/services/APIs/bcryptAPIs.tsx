@@ -6,7 +6,7 @@ export const encryptPasswordAPI = async (password: string) => {
     {
       method: 'POST',
       headers: {
-        'x-api-key': keys.bcryptLambdaAPI,
+        'x-api-key': keys.bcryptEncryptAPI,
       },
       body: password,
     }
@@ -24,7 +24,7 @@ export const decryptPasswordAPI = async (
     {
       method: 'POST',
       headers: {
-        'x-api-key': keys.bcryptLambdaAPI,
+        'x-api-key': keys.bcryptDecryptAPI,
       },
       body: JSON.stringify({
         storedPassword: storedPassword,
