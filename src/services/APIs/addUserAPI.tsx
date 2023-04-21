@@ -7,7 +7,7 @@ export const addUserAPI = async (AddUserObj: AddUserObjType) => {
     {
       method: 'POST',
       headers: {
-        'x-api-key': keys.newDynamoKey,
+        'x-api-key': keys.dynamoAPI,
       },
       body: JSON.stringify(AddUserObj),
     }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { lostPasswordFunction } from '../../services/functions/lostPasswordFunction';
+import { lostPasswordEmailFunction } from '../../services/functions/lostPasswordEmailFunction';
 import { useSnackbar } from '../../lib/notistack';
 
 // Material UI
@@ -34,7 +34,7 @@ const ForgotPasswordForm: React.FC = () => {
     event.preventDefault();
     setLoading(true);
     // Perform form submission logic or validation here
-    const response = await lostPasswordFunction(formData.email);
+    const response = await lostPasswordEmailFunction(formData.email);
     setLoading(false);
     switch (response) {
       case 'Success':
@@ -82,7 +82,7 @@ const ForgotPasswordForm: React.FC = () => {
             disabled={loading}
             sx={{ mt: 3, mb: 2 }}
           >
-            <span style={loading ? { visibility: 'hidden' } : {}}>Log In</span>
+            <span style={loading ? { visibility: 'hidden' } : {}}>Submit</span>
           </Button>
           {loading && (
             <CircularProgress

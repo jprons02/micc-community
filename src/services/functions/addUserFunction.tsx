@@ -25,6 +25,7 @@ const getLastItemId = async () => {
   return sortedData[0];
 };
 
+// Issues an ID number for the new user.
 const issueId = async () => {
   const allItems: any = await getAllItemsAPI();
   if (allItems.length === 0) {

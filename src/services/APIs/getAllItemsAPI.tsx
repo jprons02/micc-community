@@ -7,7 +7,7 @@ export const getAllItemsAPI = async () => {
     {
       method: 'GET',
       headers: {
-        'x-api-key': keys.newDynamoKey,
+        'x-api-key': keys.dynamoAPI,
       },
     }
   );

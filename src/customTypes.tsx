@@ -29,3 +29,18 @@ export type sesObjType = {
   subject: string;
   message: string;
 };
+
+export type updateUserObjType = {
+  table: string;
+  id: string;
+  attributeObj: {
+    name: string;
+    value: string;
+  };
+};
+
+export type removeAttributeFromUserObjType = {
+  table: string;
+  id: string;
+  attributeName: string;
+};
