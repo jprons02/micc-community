@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSnackbar } from '../../lib/notistack';
 import { addUserFunction } from '../../services/functions/addUserFunction';
 import { useNavigate } from 'react-router-dom';
+import useGoogleRecaptcha from '../../hooks/useReCaptcha';
+import { recaptchaTest } from '../../services/functions/recaptchaTest';
 
 // material-ui
 import Button from '@mui/material/Button';
@@ -25,6 +27,21 @@ const SignupForm: React.FC = () => {
     useState<boolean>(false);
 
   const [loading, setLoading] = useState<boolean>(false);
+
+  const { token, renderReCAPTCHA } = useGoogleRecaptcha();
+  const [recaptchaResult, setRecaptchaResult] = useState<boolean | null>(false);
+
+  useEffect(() => {
+    recaptchaTest(token).then((result) => {
+      if (result) {
+        setRecaptchaResult(true);
+        console.log('recaptcha test passed');
+      } else {
+        setRecaptchaResult(false);
+        console.log('recaptcha test failed');
+      }
+    });
+  }, [token]);
 
   // variant could be success, error, warning, info, or default
   // example use) enqueueSnackbar("Form submitted successfully!", { variant: "success" });
@@ -146,12 +163,13 @@ const SignupForm: React.FC = () => {
             confirmPasswordInputError ? 'Password does not match.' : ''
           }
         />
+        {renderReCAPTCHA()}
         <div style={{ position: 'relative' }}>
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            disabled={loading}
+            disabled={loading === true || recaptchaResult !== true}
             sx={{ mt: 3, mb: 2 }}
           >
             <span style={loading ? { visibility: 'hidden' } : {}}>Sign Up</span>

@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { updateUserAPI } from '../../services/APIs/updateUserAPI';
+import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from '../../lib/notistack';
 import { createNewPassword } from '../../services/functions/createNewPassword';
-import { removeAttributeFromUserAPI } from '../../services/APIs/removeAttributeFromUserAPI';
 
 // Material UI
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import LinkAnchor from '@mui/material/Link';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
 interface CreateNewPasswordFormProps {
@@ -90,29 +85,6 @@ const CreateNewPasswordForm: React.FC<CreateNewPasswordFormProps> = (props) => {
       setLoading(false);
 
       return;
-      /*
-      setLoading(true);
-      const user = {
-        email: formData.email,
-        password: formData.password,
-      };
-      const response = await addUserFunction(user);
-      if (response === 'Item added') {
-        enqueueSnackbar("You've successfully signed up!", {
-          variant: 'success',
-        });
-        navigate('/login');
-      } else if (response === 'Tribal ID already exists') {
-        enqueueSnackbar('This Tribal ID already exists.', {
-          variant: 'error',
-        });
-      } else {
-        enqueueSnackbar('Something went wrong. Please try again.', {
-          variant: 'error',
-        });
-      }
-      setLoading(false);
-      */
     }
   };
 

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { lostPasswordEmailFunction } from '../../services/functions/lostPasswordEmailFunction';
 import { useSnackbar } from '../../lib/notistack';
+import useGoogleRecaptcha from '../../hooks/useReCaptcha';
+import { recaptchaTest } from '../../services/functions/recaptchaTest';
 
 // Material UI
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import LinkAnchor from '@mui/material/Link';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -20,6 +20,21 @@ const ForgotPasswordForm: React.FC = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   let [error, setError] = useState<string | null>(null);
+
+  const { token, renderReCAPTCHA } = useGoogleRecaptcha();
+  const [recaptchaResult, setRecaptchaResult] = useState<boolean | null>(false);
+
+  useEffect(() => {
+    recaptchaTest(token).then((result) => {
+      if (result) {
+        setRecaptchaResult(true);
+        console.log('recaptcha test passed');
+      } else {
+        setRecaptchaResult(false);
+        console.log('recaptcha test failed');
+      }
+    });
+  }, [token]);
 
   // variant could be success, error, warning, info, or default
   // example use) enqueueSnackbar("Form submitted successfully!", { variant: "success" });
@@ -74,12 +89,13 @@ const ForgotPasswordForm: React.FC = () => {
           fullWidth
           margin="normal"
         />
+        {renderReCAPTCHA()}
         <div style={{ position: 'relative' }}>
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            disabled={loading}
+            disabled={loading === true || recaptchaResult !== true}
             sx={{ mt: 3, mb: 2 }}
           >
             <span style={loading ? { visibility: 'hidden' } : {}}>Submit</span>
@@ -99,7 +115,8 @@ const ForgotPasswordForm: React.FC = () => {
         </div>
         {error === 'Email not found' ? (
           <div style={{ textAlign: 'center' }}>
-            <Link to="/signup">Don't have an account? Sign Up</Link>
+            {/* USING ANCHOR IN STEAD OF LINK SO THAT THE RECAPTCHA IFRAME LOADS CORRECTLY */}
+            <a href="/signup">Don't have an account? Sign Up</a>
           </div>
         ) : (
           ''

@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { SetLoginContext } from '../../context/loginContext';
 import { logInFunction } from '../../services/functions/logInFunction';
 import { useSnackbar } from '../../lib/notistack';
+import useGoogleRecaptcha from '../../hooks/useReCaptcha';
+import { recaptchaTest } from '../../services/functions/recaptchaTest';
 
 // material-ui
 import Button from '@mui/material/Button';
@@ -33,6 +34,21 @@ const LoginForm: React.FC = () => {
   });
 
   const [loading, setLoading] = useState<boolean>(false);
+
+  const { token, renderReCAPTCHA } = useGoogleRecaptcha();
+  const [recaptchaResult, setRecaptchaResult] = useState<boolean | null>(false);
+
+  useEffect(() => {
+    recaptchaTest(token).then((result) => {
+      if (result) {
+        setRecaptchaResult(true);
+        console.log('recaptcha test passed');
+      } else {
+        setRecaptchaResult(false);
+        console.log('recaptcha test failed');
+      }
+    });
+  }, [token]);
 
   type eventType = React.ChangeEvent<HTMLInputElement>;
   const handleChange = (event: eventType) => {
@@ -110,12 +126,13 @@ const LoginForm: React.FC = () => {
           fullWidth
           margin="normal"
         />
+        {renderReCAPTCHA()}
         <div style={{ position: 'relative' }}>
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            disabled={loading}
+            disabled={loading === true || recaptchaResult !== true}
             sx={{ mt: 3, mb: 2 }}
           >
             <span style={loading ? { visibility: 'hidden' } : {}}>Log In</span>
@@ -133,10 +150,11 @@ const LoginForm: React.FC = () => {
             />
           )}
         </div>
+        {/* USING ANCHOR IN STEAD OF LINK SO THAT THE RECAPTCHA IFRAME LOADS CORRECTLY */}
         <div style={{ textAlign: 'center' }}>
-          <Link to="/forgot-password">Forgot password?</Link>
+          <a href="/forgot-password">Forgot password?</a>
           &nbsp;&nbsp;
-          <Link to="/signup">Don't have an account? Sign Up</Link>
+          <a href="/signup">Don't have an account? Sign Up</a>
         </div>
       </form>
     </div>
