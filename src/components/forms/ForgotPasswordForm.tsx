@@ -28,10 +28,8 @@ const ForgotPasswordForm: React.FC = () => {
     recaptchaTest(token).then((result) => {
       if (result) {
         setRecaptchaResult(true);
-        console.log('recaptcha test passed');
       } else {
         setRecaptchaResult(false);
-        console.log('recaptcha test failed');
       }
     });
   }, [token]);
