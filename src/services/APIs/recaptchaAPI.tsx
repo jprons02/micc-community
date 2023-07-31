@@ -1,4 +1,5 @@
 import { keys } from '../../data/keys';
+//https://www.google.com/u/2/recaptcha/admin/site/635130373/settings
 
 export const recaptchaAPI = async (clientResponse: string | null) => {
   const dataString = JSON.stringify({

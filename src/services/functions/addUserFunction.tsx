@@ -5,6 +5,7 @@ import { AddUserObjType } from '../../customTypes';
 import { encryptPasswordAPI } from '../APIs/bcryptAPIs';
 import { getItemByAttribute } from '../APIs/getItemByAttribute';
 import { keys } from '../../data/keys';
+import { tribalIds } from '../../data/tribalIds';
 
 // getLastItem finds the highest ID number in the database and returns it.
 // This is used to create a new ID number for the next user dynamically.
@@ -39,6 +40,13 @@ const issueId = async () => {
 // This function is used to check if the user exists in the database and add them if they don't.
 export const addUserFunction = async (user: UserType) => {
   try {
+    // Look for tribalId inputted in list of all tribal ids.
+    // if found, allow user to be created.
+    const isTribal = tribalIds.includes(user.tribalId);
+    if (!isTribal) {
+      return 'Tribal ID not found.';
+    }
+
     // Find index of the given tribalId in array. We want to compare the password and tribalId at the same index.
     const record = await getItemByAttribute('tribalId', user.tribalId);
     if ((await record.message) === 'Item not found') {

@@ -24,4 +24,5 @@ yarn-error.log*
 
 # custom
 keys.js
+tribalIds.js
 .env

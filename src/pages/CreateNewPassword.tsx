@@ -49,22 +49,10 @@ const ForgotPassword: React.FC = () => {
   }, [userId, lostPasswordCode]);
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Paper elevation={3} sx={{ padding: 2, marginTop: 8 }}>
-        <Box
-          sx={{
-            padding: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            Create a new password
-          </Typography>
-          {showForm && <CreateNewPasswordForm record={record} />}
-        </Box>
-      </Paper>
+    <Container component="main" maxWidth="md">
+      <div style={{ marginTop: '50px' }}>
+        {showForm && <CreateNewPasswordForm record={record} />}
+      </div>
     </Container>
   );
 };

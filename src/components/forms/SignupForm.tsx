@@ -7,12 +7,18 @@ import { recaptchaTest } from '../../services/functions/recaptchaTest';
 
 // material-ui
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import { FormPaper } from '../../assets/styles/styledComponents/formPaper';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const SignupForm: React.FC = () => {
   let navigate = useNavigate();
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -90,6 +96,10 @@ const SignupForm: React.FC = () => {
         enqueueSnackbar('This Tribal ID already exists.', {
           variant: 'error',
         });
+      } else if (response === 'Tribal ID not found.') {
+        enqueueSnackbar('Tribal ID not found.', {
+          variant: 'error',
+        });
       } else {
         enqueueSnackbar('Something went wrong. Please try again.', {
           variant: 'error',
@@ -98,95 +108,100 @@ const SignupForm: React.FC = () => {
       setLoading(false);
     }
   };
-
   return (
-    <div>
-      <CssBaseline />
-      <form onSubmit={handleSubmit}>
-        <TextField
-          required
-          label="First name"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          required
-          label="Last name"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          required
-          label="Email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          required
-          label="Tribal ID"
-          name="tribalId"
-          value={formData.tribalId}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          required
-          label="Password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          required
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          error={confirmPasswordInputError}
-          label={confirmPasswordInputError ? 'Error' : 'Confirm password'}
-          helperText={
-            confirmPasswordInputError ? 'Password does not match.' : ''
-          }
-        />
-        {renderReCAPTCHA()}
-        <div style={{ position: 'relative' }}>
-          <Button
-            type="submit"
+    <form onSubmit={handleSubmit}>
+      <FormPaper>
+        <FormControl fullWidth>
+          <FormLabel component="h1" sx={{ fontSize: '22px' }}>
+            Sign Up
+          </FormLabel>
+          <TextField
+            required
+            label="First name"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
             fullWidth
-            variant="contained"
-            disabled={loading === true || recaptchaResult !== true}
-            sx={{ mt: 3, mb: 2 }}
-          >
-            <span style={loading ? { visibility: 'hidden' } : {}}>Sign Up</span>
-          </Button>
-          {loading && (
-            <CircularProgress
-              size={24}
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                marginTop: '-8px',
-                marginLeft: '-12px',
-              }}
-            />
-          )}
-        </div>
-      </form>
-    </div>
+            margin="normal"
+          />
+          <TextField
+            required
+            label="Last name"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            required
+            label="Email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            required
+            label="Tribal ID"
+            name="tribalId"
+            value={formData.tribalId}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            required
+            label="Password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            required
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            error={confirmPasswordInputError}
+            label={confirmPasswordInputError ? 'Error' : 'Confirm password'}
+            helperText={
+              confirmPasswordInputError ? 'Password does not match.' : ''
+            }
+          />
+          {renderReCAPTCHA()}
+          <div style={{ position: 'relative' }}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={loading === true || recaptchaResult !== true}
+              sx={{ mt: 3, mb: 2 }}
+            >
+              <span style={loading ? { visibility: 'hidden' } : {}}>
+                Sign Up
+              </span>
+            </Button>
+            {loading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-8px',
+                  marginLeft: '-12px',
+                }}
+              />
+            )}
+          </div>
+        </FormControl>
+      </FormPaper>
+    </form>
   );
 };
 

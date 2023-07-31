@@ -5,19 +5,34 @@ import ReactDOM from 'react-dom/client';
 import './assets/styles/css/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import { ThemeProvider } from '@mui/material/styles';
 import { SnackbarProvider } from './lib/notistack';
 import { LoginProvider } from './context/loginContext';
+import { UserProvider } from './context/userContext';
+
+export const muiCache = createCache({
+  key: 'mui',
+  prepend: true,
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <LoginProvider>
-    <SnackbarProvider maxSnack={3}>
-      <App />
-    </SnackbarProvider>
-    </LoginProvider>
+    <CacheProvider value={muiCache}>
+      <ThemeProvider theme={{}}>
+        <LoginProvider>
+          <UserProvider>
+            <SnackbarProvider maxSnack={3}>
+              <App />
+            </SnackbarProvider>
+          </UserProvider>
+        </LoginProvider>
+      </ThemeProvider>
+    </CacheProvider>
   </React.StrictMode>
 );
 

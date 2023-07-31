@@ -5,9 +5,13 @@ import { createNewPassword } from '../../services/functions/createNewPassword';
 
 // Material UI
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import { FormPaper } from '../../assets/styles/styledComponents/formPaper';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 interface CreateNewPasswordFormProps {
   record: any;
@@ -15,6 +19,9 @@ interface CreateNewPasswordFormProps {
 
 const CreateNewPasswordForm: React.FC<CreateNewPasswordFormProps> = (props) => {
   let navigate = useNavigate();
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up('sm'));
+
   const [formData, setFormData] = React.useState({
     password: '',
     confirmPassword: '',
@@ -89,56 +96,62 @@ const CreateNewPasswordForm: React.FC<CreateNewPasswordFormProps> = (props) => {
   };
 
   return (
-    <div>
-      <CssBaseline />
-      <form onSubmit={handleSubmit}>
-        <TextField
-          required
-          label="New Password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          required
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          error={confirmPasswordInputError}
-          label={confirmPasswordInputError ? 'Error' : 'Confirm password'}
-          helperText={
-            confirmPasswordInputError ? 'Password does not match.' : ''
-          }
-        />
-        <div style={{ position: 'relative' }}>
-          <Button
-            type="submit"
+    <form onSubmit={handleSubmit}>
+      <FormPaper>
+        <FormControl fullWidth>
+          <FormLabel component="h1" sx={{ fontSize: '22px' }}>
+            Create a new password
+          </FormLabel>
+          <TextField
+            required
+            label="New Password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             fullWidth
-            variant="contained"
-            disabled={loading}
-            sx={{ mt: 3, mb: 2 }}
-          >
-            <span style={loading ? { visibility: 'hidden' } : {}}>Submit</span>
-          </Button>
-          {loading && (
-            <CircularProgress
-              size={24}
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                marginTop: '-8px',
-                marginLeft: '-12px',
-              }}
-            />
-          )}
-        </div>
-      </form>
-    </div>
+            margin="normal"
+          />
+          <TextField
+            required
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            error={confirmPasswordInputError}
+            label={confirmPasswordInputError ? 'Error' : 'Confirm password'}
+            helperText={
+              confirmPasswordInputError ? 'Password does not match.' : ''
+            }
+          />
+          <div style={{ position: 'relative' }}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={loading}
+              sx={{ mt: 3, mb: 2 }}
+            >
+              <span style={loading ? { visibility: 'hidden' } : {}}>
+                Submit
+              </span>
+            </Button>
+            {loading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-8px',
+                  marginLeft: '-12px',
+                }}
+              />
+            )}
+          </div>
+        </FormControl>
+      </FormPaper>
+    </form>
   );
 };
 

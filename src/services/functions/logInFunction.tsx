@@ -12,8 +12,14 @@ export const logInFunction = async (formInput: LoginFormType) => {
     // "record" argument must remain type "any" because it may be ever changing.
     const record: any = await getItemByAttribute('email', formInput.email);
 
+    const response = {
+      message: '',
+      data: {},
+    };
+
     if ((await record.message) === 'Item not found') {
-      return 'Email not found';
+      response.message = 'Email not found';
+      return response;
     } else {
       const dbPassword = await record.password;
       const dbTribalId = await record.tribalId;
@@ -22,13 +28,18 @@ export const logInFunction = async (formInput: LoginFormType) => {
         formInput.password
       );
       if (passwordMatch === 'Internal Server Error') {
-        return 'Internal Server Error';
+        response.message = 'Internal Server Error';
+        return response;
       } else if (passwordMatch !== 'match') {
-        return 'Incorrect password';
+        response.message = 'Incorrect password';
+        return response;
       } else if (dbTribalId !== formInput.tribalId) {
-        return 'Incorrect tribalId';
+        response.message = 'Incorrect tribalId';
+        return response;
       } else {
-        return 'Success';
+        response.message = 'Success';
+        response.data = record;
+        return response;
       }
     }
   } catch (error) {

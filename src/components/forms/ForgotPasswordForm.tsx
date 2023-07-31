@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { lostPasswordEmailFunction } from '../../services/functions/lostPasswordEmailFunction';
 import { useSnackbar } from '../../lib/notistack';
 import useGoogleRecaptcha from '../../hooks/useReCaptcha';
@@ -7,13 +6,19 @@ import { recaptchaTest } from '../../services/functions/recaptchaTest';
 
 // Material UI
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import { FormPaper } from '../../assets/styles/styledComponents/formPaper';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const ForgotPasswordForm: React.FC = () => {
-  let navigate = useNavigate();
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up('sm'));
+
   const [formData, setFormData] = React.useState({
     email: '',
   });
@@ -72,55 +77,61 @@ const ForgotPasswordForm: React.FC = () => {
   };
 
   return (
-    <div>
-      <CssBaseline />
-      <form onSubmit={handleSubmit}>
-        <Typography style={{ marginTop: '15px' }} variant="body2">
-          Please enter in your email address to reset your password
-        </Typography>
-        <TextField
-          required
-          label="Email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        {renderReCAPTCHA()}
-        <div style={{ position: 'relative' }}>
-          <Button
-            type="submit"
+    <form onSubmit={handleSubmit}>
+      <FormPaper>
+        <FormControl fullWidth>
+          <FormLabel component="h1" sx={{ fontSize: '22px' }}>
+            Let's get that password for you
+          </FormLabel>
+          <Typography style={{ marginTop: '15px' }} variant="body2">
+            Please enter in your email address to reset your password
+          </Typography>
+          <TextField
+            required
+            label="Email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             fullWidth
-            variant="contained"
-            disabled={loading === true || recaptchaResult !== true}
-            sx={{ mt: 3, mb: 2 }}
-          >
-            <span style={loading ? { visibility: 'hidden' } : {}}>Submit</span>
-          </Button>
-          {loading && (
-            <CircularProgress
-              size={24}
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                marginTop: '-8px',
-                marginLeft: '-12px',
-              }}
-            />
-          )}
-        </div>
-        {error === 'Email not found' ? (
-          <div style={{ textAlign: 'center' }}>
-            {/* USING ANCHOR IN STEAD OF LINK SO THAT THE RECAPTCHA IFRAME LOADS CORRECTLY */}
-            <a href="/signup">Don't have an account? Sign Up</a>
+            margin="normal"
+          />
+          {renderReCAPTCHA()}
+          <div style={{ position: 'relative' }}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={loading === true || recaptchaResult !== true}
+              sx={{ mt: 3, mb: 2 }}
+            >
+              <span style={loading ? { visibility: 'hidden' } : {}}>
+                Submit
+              </span>
+            </Button>
+            {loading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-8px',
+                  marginLeft: '-12px',
+                }}
+              />
+            )}
           </div>
-        ) : (
-          ''
-        )}
-      </form>
-    </div>
+          {error === 'Email not found' ? (
+            <div style={{ textAlign: 'center' }}>
+              {/* USING ANCHOR IN STEAD OF LINK SO THAT THE RECAPTCHA IFRAME LOADS CORRECTLY */}
+              <a href="/signup">Don't have an account? Sign Up</a>
+            </div>
+          ) : (
+            ''
+          )}
+        </FormControl>
+      </FormPaper>
+    </form>
   );
 };
 

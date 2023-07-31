@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import CreateNewPassword from './pages/CreateNewPassword';
+import Calendar from './pages/Calendar';
 
 // assets
 import './assets/styles/css/App.css';
@@ -24,6 +25,7 @@ const App: React.FC = () => {
             path="/resetpassword/:userId/:lostPasswordCode"
             element={<CreateNewPassword />}
           />
+          <Route path="/calendar" element={<Calendar />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </BrowserRouter>
