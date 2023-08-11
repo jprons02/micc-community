@@ -43,9 +43,8 @@ const CustomCalendar: React.FC<Props> = ({ events }) => {
             return (
               <span
                 style={{
-                  position: 'absolute',
-                  marginLeft: '-6px',
-                  marginTop: '12px',
+                  display: 'block',
+                  marginBottom: '-16px',
                 }}
               >
                 &#8226;

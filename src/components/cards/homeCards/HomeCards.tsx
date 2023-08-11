@@ -28,7 +28,12 @@ const HomeCards: React.FC = () => {
   };
 
   const standardServices = [
-    { title: 'Tribal Notices', link: '', color: '#128324', disabled: true },
+    {
+      title: 'Tribal Notices',
+      link: '/tribal-notices',
+      color: '#128324',
+      disabled: false,
+    },
     {
       title: 'Events Calendar',
       link: '/calendar',

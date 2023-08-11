@@ -18,6 +18,7 @@ import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import CreateNewPassword from './pages/CreateNewPassword';
 import Calendar from './pages/Calendar';
+import TribalNotices from './pages/TribalNotices';
 
 // admin pages
 import ManageTribalNotices from './pages/admin/ManageTribalNotices';
@@ -63,20 +64,22 @@ const App: React.FC = () => {
             </LoggedIn>
           }
         />
-        {/*commented out while i work on home page.*/}
-        {/*
-            <Route
-            path="/home"
-            element={
-              <LoggedIn>
-                <Home />
-              </LoggedIn>
-            }
-          />
-          */}
-        <Route path="/home" element={<Home />} />
-        {/*NEED TO BE LOGGED ADMIN*/}
-        {/*NEED TO BE LOGGED ADMIN*/}
+        <Route
+          path="/home"
+          element={
+            <LoggedIn>
+              <Home />
+            </LoggedIn>
+          }
+        />
+        <Route
+          path="/tribal-notices"
+          element={
+            <LoggedIn>
+              <TribalNotices />
+            </LoggedIn>
+          }
+        />
         {/*NEED TO BE LOGGED ADMIN*/}
         <Route
           path="/admin/notices"
@@ -88,8 +91,6 @@ const App: React.FC = () => {
             </LoggedIn>
           }
         />
-        {/*NEED TO BE LOGGED ADMIN*/}
-        {/*NEED TO BE LOGGED ADMIN*/}
         {/*NEED TO BE LOGGED ADMIN*/}
         <Route
           path="/calendar"

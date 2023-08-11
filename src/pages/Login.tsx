@@ -19,6 +19,9 @@ const Login: React.FC = () => {
   return (
     <Container component="main" maxWidth="md">
       <div style={{ marginTop: '50px' }}>
+        <h1 style={{ textAlign: 'center', marginBottom: '35px' }}>
+          miccosukee.community
+        </h1>
         <LoginForm />
       </div>
     </Container>

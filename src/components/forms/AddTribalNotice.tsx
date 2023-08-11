@@ -17,7 +17,14 @@ import { addTribalNoticeAPI } from '../../services/APIs/addTribalNoticeAPI';
 // context
 import { UserContext } from '../../context/userContext';
 
-const AddTribalNotice: React.FC = () => {
+// Add prop type
+type AddTribalNoticeProps = {
+  rerenderNotices: () => void;
+};
+
+const AddTribalNotice: React.FC<AddTribalNoticeProps> = ({
+  rerenderNotices,
+}) => {
   let navigate = useNavigate();
   const user = useContext(UserContext);
   let [error, setError] = useState<string | null>(null);
@@ -47,10 +54,20 @@ const AddTribalNotice: React.FC = () => {
   const AddTribalNoticeObj: AddTribalNoticeObjType = {
     tableName: keys.webTableName,
     item: {
-      id: user.id,
+      id: today.toISOString(),
       tribalNotice: formData.tribalNotice,
+      name: `${user.firstName} ${user.lastName}`,
+      userId: user.id,
       dateAdded: today,
     },
+  };
+
+  // function that clears form data on submit
+  const clearFormData = () => {
+    setFormData({
+      tribalId: '',
+      tribalNotice: '',
+    });
   };
 
   const handleSubmit = async (event: any) => {
@@ -64,6 +81,8 @@ const AddTribalNotice: React.FC = () => {
       enqueueSnackbar('Notice successfully created!', {
         variant: 'success',
       });
+      clearFormData();
+      rerenderNotices();
     } else {
       setError('Server error');
       enqueueSnackbar('Server error, please try again.', {

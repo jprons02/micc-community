@@ -23,6 +23,8 @@ export type AddTribalNoticeObjType = {
   item: {
     id: string;
     tribalNotice: string;
+    name: string;
+    userId: string;
     dateAdded: Date;
   };
 };
