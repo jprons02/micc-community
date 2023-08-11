@@ -7,10 +7,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import { BrowserRouter } from 'react-router-dom';
+
+// Providers
 import { ThemeProvider } from '@mui/material/styles';
 import { SnackbarProvider } from './lib/notistack';
 import { LoginProvider } from './context/loginContext';
 import { UserProvider } from './context/userContext';
+import { CalendarEventsProvider } from './context/calendarEvents';
+import { TribalNoticesProvider } from './context/tribalNotices';
 
 export const muiCache = createCache({
   key: 'mui',
@@ -22,17 +27,23 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <CacheProvider value={muiCache}>
-      <ThemeProvider theme={{}}>
-        <LoginProvider>
-          <UserProvider>
-            <SnackbarProvider maxSnack={3}>
-              <App />
-            </SnackbarProvider>
-          </UserProvider>
-        </LoginProvider>
-      </ThemeProvider>
-    </CacheProvider>
+    <BrowserRouter>
+      <CacheProvider value={muiCache}>
+        <ThemeProvider theme={{}}>
+          <LoginProvider>
+            <UserProvider>
+              <CalendarEventsProvider>
+                <TribalNoticesProvider>
+                  <SnackbarProvider maxSnack={3}>
+                    <App />
+                  </SnackbarProvider>
+                </TribalNoticesProvider>
+              </CalendarEventsProvider>
+            </UserProvider>
+          </LoginProvider>
+        </ThemeProvider>
+      </CacheProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

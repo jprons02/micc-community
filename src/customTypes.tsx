@@ -18,6 +18,15 @@ export type AddUserObjType = {
   };
 };
 
+export type AddTribalNoticeObjType = {
+  tableName: string;
+  item: {
+    id: string;
+    tribalNotice: string;
+    dateAdded: Date;
+  };
+};
+
 export type LoginFormType = {
   email: string;
   tribalId: string;

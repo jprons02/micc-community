@@ -9,10 +9,9 @@ import { getItemByAttribute } from '../services/APIs/getItemByAttribute';
 
 // material-ui
 import { Container } from '@mui/material';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
 import CreateNewPasswordForm from '../components/forms/CreateNewPasswordForm';
+
+import { keys } from '../data/keys';
 
 const ForgotPassword: React.FC = () => {
   const isLoggedIn = useContext(LoginContext);
@@ -33,7 +32,7 @@ const ForgotPassword: React.FC = () => {
   useEffect(() => {
     const checkNewPasswordCode = async () => {
       if (userId) {
-        const user = await getItemByAttribute('id', userId);
+        const user = await getItemByAttribute(keys.userTableName, 'id', userId);
 
         if (user.lostPasswordCode === lostPasswordCode) {
           setRecord(user);

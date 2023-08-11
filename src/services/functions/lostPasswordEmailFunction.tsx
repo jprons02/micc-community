@@ -29,6 +29,7 @@ const generateAndStoreLostPasswordCode = async (record: any) => {
 // Get the update record with the lostPasswordCode from the database
 const getRecordWithLostPasswordCode = async (record: any) => {
   const recordWithLostPasswordCode: any = await getItemByAttribute(
+    keys.userTableName,
     'email',
     record.email
   );
@@ -51,7 +52,11 @@ const sendEmailWithLostPasswordCode = async (record: any) => {
 };
 
 export const lostPasswordEmailFunction = async (email: string) => {
-  const record: any = await getItemByAttribute('email', email);
+  const record: any = await getItemByAttribute(
+    keys.userTableName,
+    'email',
+    email
+  );
   if ((await record.message) === 'Item not found') {
     return 'Email not found';
   } else {

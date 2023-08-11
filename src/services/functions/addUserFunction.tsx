@@ -10,7 +10,7 @@ import { tribalIds } from '../../data/tribalIds';
 // getLastItem finds the highest ID number in the database and returns it.
 // This is used to create a new ID number for the next user dynamically.
 const getLastItemId = async () => {
-  const allItems: any = await getAllItemsAPI();
+  const allItems: any = await getAllItemsAPI(keys.userTableName);
 
   let idsArray: Array<string> = [];
 
@@ -28,7 +28,7 @@ const getLastItemId = async () => {
 
 // Issues an ID number for the new user.
 const issueId = async () => {
-  const allItems: any = await getAllItemsAPI();
+  const allItems: any = await getAllItemsAPI(keys.userTableName);
   if (allItems.length === 0) {
     return '1';
   } else {
@@ -48,7 +48,11 @@ export const addUserFunction = async (user: UserType) => {
     }
 
     // Find index of the given tribalId in array. We want to compare the password and tribalId at the same index.
-    const record = await getItemByAttribute('tribalId', user.tribalId);
+    const record = await getItemByAttribute(
+      keys.userTableName,
+      'tribalId',
+      user.tribalId
+    );
     if ((await record.message) === 'Item not found') {
       //const highestIdNumber = await getLastItemId();
       //return 'OK';

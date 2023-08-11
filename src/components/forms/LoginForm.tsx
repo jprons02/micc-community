@@ -1,11 +1,22 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SetLoginContext } from '../../context/loginContext';
-import { SetUserContext } from '../../context/userContext';
 import { logInFunction } from '../../services/functions/logInFunction';
 import { useSnackbar } from '../../lib/notistack';
 import useGoogleRecaptcha from '../../hooks/useReCaptcha';
 import { recaptchaTest } from '../../services/functions/recaptchaTest';
+
+// context
+import { SetLoginContext } from '../../context/loginContext';
+import { SetUserContext } from '../../context/userContext';
+import { SetTribalNoticesContext } from '../../context/tribalNotices';
+import { SetCalendarEventsContext } from '../../context/calendarEvents';
+
+// APIs
+import { getAllItemsAPI } from '../../services/APIs/getAllItemsAPI';
+import { googleCalendarGetEventsAPI } from '../../services/APIs/googleCalendarGetEvents';
+
+// data
+import { keys } from '../../data/keys';
 
 // material-ui
 import Button from '@mui/material/Button';
@@ -21,6 +32,8 @@ const LoginForm: React.FC = () => {
 
   const setIsLoggedIn = useContext(SetLoginContext);
   const setUser = useContext(SetUserContext);
+  const setCalendarEvents = useContext(SetCalendarEventsContext);
+  const setTribalNotices = useContext(SetTribalNoticesContext);
 
   // variant could be success, error, warning, info, or default
   // example use) enqueueSnackbar("Form submitted successfully!", { variant: "success" });
@@ -38,7 +51,6 @@ const LoginForm: React.FC = () => {
   });
 
   const [loading, setLoading] = useState<boolean>(false);
-
   const { token, renderReCAPTCHA } = useGoogleRecaptcha();
   const [recaptchaResult, setRecaptchaResult] = useState<boolean | null>(false);
 
@@ -58,6 +70,16 @@ const LoginForm: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const calendarEventsCall = async () => {
+    const response = await googleCalendarGetEventsAPI();
+    setCalendarEvents(await response);
+  };
+
+  const tribalNoticesCall = async () => {
+    const response = await getAllItemsAPI(keys.webTableName);
+    setTribalNotices(await response);
+  };
+
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setLoading(true);
@@ -71,6 +93,8 @@ const LoginForm: React.FC = () => {
           setIsLoggedIn(true);
           setUser(result.data);
           navigate('/home');
+          calendarEventsCall();
+          tribalNoticesCall();
           enqueueSnackbar("You've successfully logged in!", {
             variant: 'success',
           });

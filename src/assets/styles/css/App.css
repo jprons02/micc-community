@@ -1,5 +1,7 @@
 .App {
-  text-align: center;
+  max-width: 1200px;
+  padding: 10px;
+  margin: auto;
 }
 
 .App-logo {
@@ -34,5 +36,12 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* DESKTOP VIEW */
+@media screen and (min-width: 960px) {
+  .App {
+    padding: 50px;
   }
 }

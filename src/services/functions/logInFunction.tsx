@@ -1,6 +1,7 @@
 import { compareHashedPasswords } from './compareHashedPasswords';
 import { LoginFormType } from '../../customTypes';
 import { getItemByAttribute } from '../APIs/getItemByAttribute';
+import { keys } from '../../data/keys';
 
 // This function is used to check if the user exists in the database
 // Then compare hashed password with input password for a match
@@ -10,7 +11,11 @@ export const logInFunction = async (formInput: LoginFormType) => {
   try {
     // Find index of the given email in array. We want to compare the password and tribalId at the same index.
     // "record" argument must remain type "any" because it may be ever changing.
-    const record: any = await getItemByAttribute('email', formInput.email);
+    const record: any = await getItemByAttribute(
+      keys.userTableName,
+      'email',
+      formInput.email
+    );
 
     const response = {
       message: '',
