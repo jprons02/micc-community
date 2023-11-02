@@ -19,6 +19,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import CreateNewPassword from './pages/CreateNewPassword';
 import Calendar from './pages/Calendar';
 import TribalNotices from './pages/TribalNotices';
+import Health from './pages/Health';
 
 // admin pages
 import ManageTribalNotices from './pages/admin/ManageTribalNotices';
@@ -77,6 +78,14 @@ const App: React.FC = () => {
           element={
             <LoggedIn>
               <TribalNotices />
+            </LoggedIn>
+          }
+        />
+        <Route
+          path="/health"
+          element={
+            <LoggedIn>
+              <Health />
             </LoggedIn>
           }
         />
