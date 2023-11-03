@@ -31,6 +31,13 @@ const HealthSection: React.FC = () => {
         <p>Fax: xxx-xxx-xxxx</p>
       </div>
       <div style={sectionStyle}>
+        <h4>Events</h4>
+        <p>
+          Events here pulled from calendar with specific health tag or from
+          different calendar
+        </p>
+      </div>
+      <div style={sectionStyle}>
         <h4>Meet Our Staff</h4>
         <p>
           Health Department Staff 1-paragraph biographies with: (a) Name, (b)

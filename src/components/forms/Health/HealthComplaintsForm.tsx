@@ -62,7 +62,7 @@ const HealthComplaintsForm: React.FC = () => {
 
     const valuesObj = {
       email: ['jronselli@miccosukee.com'],
-      subject: 'Miccosukee Community Website - Please reset your password',
+      subject: 'Health Complaints / Suggestions Form Submission',
       message: `First Name: ${formData.firstName}\nLast Name: ${formData.lastName}\nEmail: ${formData.email}\nMessage: ${formData.message}`,
     };
     const response = await awsEmailServiceAPI(valuesObj);
