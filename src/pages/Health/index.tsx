@@ -3,6 +3,9 @@ import HealthNav from '../../components/entityNav/healthNav';
 import HealthSection from './HealthSection';
 import ComplaintsSection from './ComplaintsSection';
 
+//material-ui
+import { Container } from '@mui/material';
+
 const HealthIndex: React.FC = () => {
   const [selectedPage, setSelectedPage] = useState({
     health: true,
@@ -88,20 +91,22 @@ const HealthIndex: React.FC = () => {
   };
 
   return (
-    <div style={{ marginTop: '70px' }}>
-      <div>
-        <h3
-          style={{
-            fontSize: '20px',
-            textTransform: 'uppercase',
-          }}
-        >
-          {renderTitle()}
-        </h3>
+    <Container maxWidth="md">
+      <div style={{ marginTop: '70px' }}>
+        <div>
+          <h3
+            style={{
+              fontSize: '20px',
+              textTransform: 'uppercase',
+            }}
+          >
+            {renderTitle()}
+          </h3>
+        </div>
+        <HealthNav selectedPage={selectedPage} handleClick={handleClick} />
+        {renderContent()}
       </div>
-      <HealthNav selectedPage={selectedPage} handleClick={handleClick} />
-      {renderContent()}
-    </div>
+    </Container>
   );
 };
 

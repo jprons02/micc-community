@@ -13,6 +13,9 @@ import TribalNoticesList from '../../components/lists/TribalNotices';
 // context
 import { SetTribalNoticesContext } from '../../context/tribalNotices';
 
+//material-ui
+import { Container } from '@mui/material';
+
 const ManageTribalNotices: React.FC = () => {
   const setTribalNotices = useContext(SetTribalNoticesContext);
 
@@ -32,7 +35,7 @@ const ManageTribalNotices: React.FC = () => {
   };
 
   return (
-    <div>
+    <Container maxWidth="md">
       <div>
         <AddTribalNotice rerenderNotices={rerenderTribalNotices} />
       </div>
@@ -40,7 +43,7 @@ const ManageTribalNotices: React.FC = () => {
         <h3 style={{ marginBottom: '-20px' }}>Tribal Notices:</h3>
         <TribalNoticesList />
       </div>
-    </div>
+    </Container>
   );
 };
 

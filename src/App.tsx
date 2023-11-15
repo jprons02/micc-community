@@ -20,15 +20,17 @@ import CreateNewPassword from './pages/CreateNewPassword';
 import Calendar from './pages/Calendar';
 import TribalNotices from './pages/TribalNotices';
 import Health from './pages/Health';
+import HolidayGreetingCards from './pages/Holiday/HolidayGreetingCards';
 
 // admin pages
-import ManageTribalNotices from './pages/admin/ManageTribalNotices';
+import ManageTribalNotices from './pages/Admin/ManageTribalNotices';
 
-// assets
+// styles
 import './assets/styles/css/App.css';
 
 // material-ui
 import Alert from '@mui/material/Alert';
+import { Container } from '@mui/material';
 
 // Alerts references, do not delete:
 //<Alert severity="error">This is an error alert — check it out!</Alert>
@@ -40,18 +42,24 @@ const App: React.FC = () => {
   const isLoggedIn = useContext(LoginContext);
 
   return (
-    <div className="App">
+    <div>
       {!isLoggedIn ? null : (
-        <React.Fragment>
-          <div style={{ position: 'relative', marginBottom: '60px' }}>
+        <Container maxWidth="md">
+          <div
+            style={{
+              position: 'relative',
+              marginTop: '20px',
+              padding: '10px 0',
+            }}
+          >
             <HomeButton />
             <LogoutButton />
           </div>
-          <div style={{ marginBottom: '50px' }}>
+          <div style={{ margin: '50px 0' }}>
             <h1>miccosukee.community</h1>
             <Alert severity="info">This is an info alert — check it out!</Alert>
           </div>
-        </React.Fragment>
+        </Container>
       )}
       <Routes>
         {/*NEED TO BE LOGGED IN*/}
@@ -119,6 +127,7 @@ const App: React.FC = () => {
           path="/resetpassword/:userId/:lostPasswordCode"
           element={<CreateNewPassword />}
         />
+        <Route path="/holidaycards" element={<HolidayGreetingCards />} />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </div>

@@ -17,7 +17,8 @@ const LogoutButton: React.FC = () => {
   const renderButton = () => {
     const style: React.CSSProperties = {
       position: 'absolute',
-      right: '0',
+      top: '10px',
+      right: '10px',
       fontSize: '11px',
       textTransform: 'uppercase',
       color: '#1976d2',

@@ -14,6 +14,7 @@ const HomeButton: React.FC = () => {
   const renderButton = () => {
     const style: React.CSSProperties = {
       position: 'absolute',
+      top: '10px',
       left: '0',
       fontSize: '11px',
       textTransform: 'uppercase',

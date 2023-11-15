@@ -1,0 +1,66 @@
+.greeting-card-header-bg {
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+/* DESKTOP VIEW */
+@media screen and (min-width: 960px) {
+  .greeting-card-header-bg {
+    height: 300px;
+  }
+}
+
+.page-header {
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  padding: 0 20px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  word-spacing: 9px;
+}
+/* DESKTOP VIEW */
+@media screen and (min-width: 960px) {
+  .page-header {
+    font-size: 60px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    word-spacing: 11px;
+  }
+}
+
+.greeting-card-container {
+  display: inline-block;
+  margin: 0 40px 60px 0;
+}
+.greeting-card-figure-container {
+  display: inline-grid;
+}
+/* DESKTOP VIEW */
+@media screen and (min-width: 960px) {
+  .greeting-card-container {
+    margin: 0 40px 60px 0;
+  }
+  .greeting-card-figure-container {
+    display: inline-block;
+  }
+}
+
+.figure-container-portrait {
+  display: inline-block;
+  margin: 0 40px 60px 0;
+}
+.figure-container-landscape {
+  width: 225px;
+}
+/* DESKTOP VIEW */
+@media screen and (min-width: 960px) {
+  .figure-container-portrait {
+    margin: 0 40px 60px 0;
+  }
+  .figure-container-landscape {
+  }
+}

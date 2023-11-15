@@ -1,8 +1,13 @@
+/*
 .App {
-  max-width: 1200px;
-  padding: 10px;
-  margin: auto;
+  
 }
+@media screen and (min-width: 960px) {
+  .App {
+    
+  }
+}
+*/
 
 .App-logo {
   height: 40vmin;
@@ -39,9 +44,52 @@
   }
 }
 
+/*MY CUSOM CSS*/
+
+.container {
+  max-width: 1200px;
+  padding: 10px;
+  margin: auto;
+}
 /* DESKTOP VIEW */
 @media screen and (min-width: 960px) {
-  .App {
+  .container {
     padding: 50px;
   }
+}
+
+.simple-dialog-container {
+  width: 100%;
+  border-radius: 6px;
+  background-color: transparent;
+}
+
+.simple-dialog-close-button {
+  top: 16px;
+  color: black;
+  float: right;
+  right: 5px;
+  cursor: pointer;
+  opacity: 0.9;
+  padding: 5px;
+  position: absolute;
+  font-size: inherit;
+  background: 0 0;
+  margin-top: -12px;
+  transition: 0.5s;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: none;
+  border-radius: 100%;
+  background-color: rgb(255 255 255 / 20%);
+  -webkit-appearance: none;
+}
+
+.simple-dialog-close-button .MuiSvgIcon-root {
+  font-size: 22px;
+}
+
+.simple-dialog-close-button:hover {
+  background: white;
+  border-radius: 100%;
 }

@@ -50,6 +50,12 @@ const HomeCards: React.FC = () => {
     { title: 'Job Listings', link: '', color: '#a1c773', disabled: true },
     { title: 'Internships', link: '', color: '#285FEB', disabled: true },
     { title: 'Community Programs', link: '', color: '#EE7391', disabled: true },
+    {
+      title: 'Greeting Cards',
+      link: '/holidaycards',
+      color: '#fc1515',
+      disabled: false,
+    },
     { title: 'FAQs', link: '', color: '#885151', disabled: true },
     { title: 'How to', link: '', color: '#0FB853', disabled: true },
   ];

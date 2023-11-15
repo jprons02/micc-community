@@ -7,6 +7,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import EventDetails from '../components/calendar/EventDetails';
+import { Container } from '@mui/material';
 
 const Calendar: React.FC = () => {
   const events = useContext(CalendarEventsContext);
@@ -35,31 +36,33 @@ const Calendar: React.FC = () => {
 
   // THIS MAX WIDTH MATCHES CALENDAR MAX WIDTH
   return (
-    <div style={{ maxWidth: '700px' }}>
-      <h3 style={{ fontSize: '20px' }}>EVENTS</h3>
-      <div style={{ marginBottom: '10px' }}>
-        <Button
-          onClick={() => handleClick(true)}
-          style={buttonStyle}
-          variant={isCalendarView ? 'contained' : 'outlined'}
-        >
-          Calendar View
-        </Button>
-        <Button
-          onClick={() => handleClick(false)}
-          style={buttonStyle}
-          variant={!isCalendarView ? 'contained' : 'outlined'}
-        >
-          List View
-        </Button>
+    <Container maxWidth="md">
+      <div style={{ maxWidth: '700px' }}>
+        <h3 style={{ fontSize: '20px' }}>EVENTS</h3>
+        <div style={{ marginBottom: '10px' }}>
+          <Button
+            onClick={() => handleClick(true)}
+            style={buttonStyle}
+            variant={isCalendarView ? 'contained' : 'outlined'}
+          >
+            Calendar View
+          </Button>
+          <Button
+            onClick={() => handleClick(false)}
+            style={buttonStyle}
+            variant={!isCalendarView ? 'contained' : 'outlined'}
+          >
+            List View
+          </Button>
+        </div>
+        <div style={{ marginTop: '40px' }}></div>
+        {isCalendarView ? (
+          <ReactCalendar events={events} />
+        ) : (
+          renderEventListView()
+        )}
       </div>
-      <div style={{ marginTop: '40px' }}></div>
-      {isCalendarView ? (
-        <ReactCalendar events={events} />
-      ) : (
-        renderEventListView()
-      )}
-    </div>
+    </Container>
   );
 };
 

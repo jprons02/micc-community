@@ -5,6 +5,7 @@ import { UserContext } from '../context/userContext';
 // material-ui
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { Container } from '@mui/material';
 
 // custom components
 import HomeCards from '../components/cards/homeCards/HomeCards';
@@ -20,9 +21,9 @@ const Home: React.FC = () => {
   const desktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <div>
+    <Container maxWidth="md">
       <HomeCards />
-    </div>
+    </Container>
   );
 };
 
