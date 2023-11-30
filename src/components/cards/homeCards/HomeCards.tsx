@@ -42,7 +42,7 @@ const HomeCards: React.FC = () => {
     },
     { title: 'Fire', link: '', color: '#C23B3B', disabled: true },
     { title: 'Police', link: '', color: '#17217B', disabled: true },
-    { title: 'Library', link: '', color: '#511283', disabled: true },
+    //{ title: 'Library', link: '', color: '#511283', disabled: true },
     { title: 'School', link: '', color: '#6D9CE4', disabled: true },
     { title: 'Health', link: '/health', color: '#7A8312', disabled: false },
     { title: 'Day Care', link: '', color: '#1EB298', disabled: true },
