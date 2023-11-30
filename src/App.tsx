@@ -6,6 +6,7 @@ import LoggedIn from './components/wrappers/LoggedIn';
 import VerifyAdmin from './components/wrappers/VerifyAdmin';
 import LogoutButton from './components/header/LogoutButton';
 import HomeButton from './components/header/HomeButton';
+import TransitionAlert from './components/alerts/TransitionAlert';
 
 // context
 import { SetLoginContext } from './context/loginContext';
@@ -20,23 +21,26 @@ import CreateNewPassword from './pages/CreateNewPassword';
 import Calendar from './pages/Calendar';
 import TribalNotices from './pages/TribalNotices';
 import Health from './pages/Health';
+
+// no login pages
 import HolidayGreetingCards from './pages/Holiday/HolidayGreetingCards';
+import WellnessEventSignup from './pages/NotLoggedIn/WellnessEventSignup';
 
 // admin pages
 import ManageTribalNotices from './pages/Admin/ManageTribalNotices';
 
 // styles
 import './assets/styles/css/App.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 // material-ui
 import Alert from '@mui/material/Alert';
 import { Container } from '@mui/material';
 
 // Alerts references, do not delete:
-//<Alert severity="error">This is an error alert — check it out!</Alert>
-//<Alert severity="warning">This is a warning alert — check it out!</Alert>
-//<Alert severity="info">This is an info alert — check it out!</Alert>
-//<Alert severity="success">This is a success alert — check it out!</Alert>
+// Example of closable alert: <TransitionAlert severity="info" text={'This is an info alert — check it out!'}/>
+// severity attribute options: 'error' | 'warning' | 'info' | 'success'
 
 const App: React.FC = () => {
   const isLoggedIn = useContext(LoginContext);
@@ -44,7 +48,7 @@ const App: React.FC = () => {
   return (
     <div>
       {!isLoggedIn ? null : (
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
           <div
             style={{
               position: 'relative',
@@ -57,7 +61,10 @@ const App: React.FC = () => {
           </div>
           <div style={{ margin: '50px 0' }}>
             <h1>miccosukee.community</h1>
-            <Alert severity="info">This is an info alert — check it out!</Alert>
+            <TransitionAlert
+              severity="info"
+              text={'This is an info alert — check it out!'}
+            />
           </div>
         </Container>
       )}
@@ -128,6 +135,10 @@ const App: React.FC = () => {
           element={<CreateNewPassword />}
         />
         <Route path="/holidaycards" element={<HolidayGreetingCards />} />
+        <Route
+          path="/wellness-event-signup"
+          element={<WellnessEventSignup />}
+        />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </div>

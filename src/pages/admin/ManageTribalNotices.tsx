@@ -35,7 +35,7 @@ const ManageTribalNotices: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <div>
         <AddTribalNotice rerenderNotices={rerenderTribalNotices} />
       </div>

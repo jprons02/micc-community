@@ -93,3 +93,17 @@
   background: white;
   border-radius: 100%;
 }
+
+/*REACT SLICK*/
+.slick-arrow {
+  background-color: transparent;
+}
+
+.slick-list {
+  text-align: center;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black !important;
+}

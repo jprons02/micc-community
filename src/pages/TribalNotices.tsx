@@ -6,7 +6,7 @@ import { Container } from '@mui/material';
 
 const TribalNotices: React.FC = () => {
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <div style={{ marginTop: '70px' }}>
         <h3
           style={{

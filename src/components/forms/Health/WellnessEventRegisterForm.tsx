@@ -3,6 +3,9 @@ import { useSnackbar } from '../../../lib/notistack';
 import { UserContext } from '../../../context/userContext';
 import { awsEmailServiceAPI } from '../../../services/APIs/awsEmailServiceAPI';
 
+// context
+import { LoginContext } from '../../../context/loginContext';
+
 // material-ui
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -10,24 +13,50 @@ import CircularProgress from '@mui/material/CircularProgress';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { FormPaper } from '../../../assets/styles/styledComponents/formPaper';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
 
-const HealthComplaintsForm: React.FC = () => {
+// create props
+interface WellnessEventRegisterFormProps {
+  center: boolean;
+}
+
+const WellnessEventRegisterForm: React.FC<WellnessEventRegisterFormProps> = (
+  props
+) => {
+  const isLoggedIn = useContext(LoginContext);
   const user = useContext(UserContext);
 
+  const wellnessEvents = [
+    {
+      value: 'TESTING - Run/Walk, 10/17/23',
+      label: 'TESTING - Run/Walk, 10/17/23',
+    },
+    {
+      value: 'TESTING - 5K Run, 12/1/23',
+      label: 'TESTING - 5K Run, 12/1/23',
+    },
+    {
+      value: 'TESTING - 10K Run, 2/18/24',
+      label: 'TESTING - 10K Run, 2/18/24',
+    },
+  ];
+
   const [formData, setFormData] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    message: '',
+    firstName: isLoggedIn ? user.firstName : '',
+    lastName: isLoggedIn ? user.lastName : '',
+    email: isLoggedIn ? user.email : '',
+    wellnessEvent: '',
   });
 
   // function that clears form data on submit
   const clearFormData = () => {
     setFormData({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      message: '',
+      firstName: isLoggedIn ? user.firstName : '',
+      lastName: isLoggedIn ? user.lastName : '',
+      email: isLoggedIn ? user.email : '',
+      wellnessEvent: '',
     });
   };
 
@@ -52,8 +81,8 @@ const HealthComplaintsForm: React.FC = () => {
 
     const valuesObj = {
       email: ['jronselli@miccosukee.com'],
-      subject: 'Health Complaints / Suggestions Form Submission',
-      message: `First Name: ${formData.firstName}\nLast Name: ${formData.lastName}\nEmail: ${formData.email}\nMessage: ${formData.message}`,
+      subject: 'Wellness Event Registration Form Submission',
+      message: `First Name: ${formData.firstName}\nLast Name: ${formData.lastName}\nEmail: ${formData.email}\nMessage: ${formData.wellnessEvent}`,
     };
     const response = await awsEmailServiceAPI(valuesObj);
 
@@ -71,16 +100,21 @@ const HealthComplaintsForm: React.FC = () => {
     }
   };
 
+  const formPaperStyle = props.center
+    ? { margin: 'auto' }
+    : { marginLeft: '0' };
+
   return (
     <form onSubmit={handleSubmit}>
-      <FormPaper style={{ marginLeft: '0' }}>
+      <FormPaper style={formPaperStyle}>
         <FormControl fullWidth>
           <FormLabel component="h1" sx={{ fontSize: '22px' }}>
-            Complaints / Suggestions
+            Wellness Event Registration
           </FormLabel>
           <TextField
+            onChange={handleChange}
             required
-            disabled
+            disabled={isLoggedIn ? true : false}
             label="First name"
             name="firstName"
             value={formData.firstName}
@@ -88,8 +122,9 @@ const HealthComplaintsForm: React.FC = () => {
             margin="normal"
           />
           <TextField
+            onChange={handleChange}
             required
-            disabled
+            disabled={isLoggedIn ? true : false}
             label="Last name"
             name="lastName"
             value={formData.lastName}
@@ -97,25 +132,38 @@ const HealthComplaintsForm: React.FC = () => {
             margin="normal"
           />
           <TextField
+            onChange={handleChange}
             required
-            disabled
+            disabled={isLoggedIn ? true : false}
             label="Email"
             name="email"
             value={formData.email}
             fullWidth
             margin="normal"
           />
-          <TextField
-            required
-            label="Message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
+          <FormControl
             fullWidth
-            margin="normal"
-            multiline
-            minRows={4}
-          />
+            variant="outlined"
+            style={{ marginTop: '16px' }}
+          >
+            <InputLabel id="select-label">Select Field</InputLabel>
+            <Select
+              onChange={handleChange}
+              labelId="select-label"
+              label="Select Event"
+              name="wellnessEvent"
+              value={formData.wellnessEvent}
+              required
+            >
+              {wellnessEvents.map((event) => {
+                return (
+                  <MenuItem key={event.value} value={event.value}>
+                    {event.label}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
           <div style={{ position: 'relative' }}>
             <Button
               type="submit"
@@ -147,4 +195,10 @@ const HealthComplaintsForm: React.FC = () => {
   );
 };
 
-export default HealthComplaintsForm;
+export default WellnessEventRegisterForm;
+
+/*
+<MenuItem value="option1">Option 1</MenuItem>
+<MenuItem value="option2">Option 2</MenuItem>
+<MenuItem value="option3">Option 3</MenuItem>
+*/

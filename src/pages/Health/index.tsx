@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import HealthNav from '../../components/entityNav/healthNav';
 import HealthSection from './HealthSection';
 import ComplaintsSection from './ComplaintsSection';
+import WellnessSection from './WellnessSection';
 
 //material-ui
 import { Container } from '@mui/material';
@@ -80,7 +81,7 @@ const HealthIndex: React.FC = () => {
       return <HealthSection />;
     }
     if (selectedPage.wellness) {
-      return 'Coming soon...';
+      return <WellnessSection />;
     }
     if (selectedPage.complaints) {
       return <ComplaintsSection />;
@@ -91,7 +92,7 @@ const HealthIndex: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <div style={{ marginTop: '70px' }}>
         <div>
           <h3

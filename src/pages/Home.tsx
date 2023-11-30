@@ -21,7 +21,7 @@ const Home: React.FC = () => {
   const desktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <HomeCards />
     </Container>
   );

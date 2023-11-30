@@ -36,7 +36,7 @@ const Calendar: React.FC = () => {
 
   // THIS MAX WIDTH MATCHES CALENDAR MAX WIDTH
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <div style={{ maxWidth: '700px' }}>
         <h3 style={{ fontSize: '20px' }}>EVENTS</h3>
         <div style={{ marginBottom: '10px' }}>

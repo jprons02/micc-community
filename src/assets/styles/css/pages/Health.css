@@ -1,0 +1,21 @@
+.healthStaffNameSlider {
+  width: 85%;
+}
+/* DESKTOP VIEW */
+@media screen and (min-width: 960px) {
+  .healthStaffNameSlider {
+    width: 500px;
+  }
+}
+
+.wellnessYoutubeEmbed {
+  width: 100%;
+  height: 320px;
+}
+/* DESKTOP VIEW */
+@media screen and (min-width: 960px) {
+  .wellnessYoutubeEmbed {
+    width: 560px;
+    height: 315px;
+  }
+}
