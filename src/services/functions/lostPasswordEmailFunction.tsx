@@ -41,7 +41,8 @@ const sendEmailWithLostPasswordCode = async (record: any) => {
   const valuesObj = {
     email: [record.email],
     subject: 'Miccosukee Community Website - Please reset your password',
-    message: `Click here to reset your password: localhost:3000/resetpassword/${record.id}/${record.lostPasswordCode}`,
+    //message: `Click here to reset your password: localhost:3000/resetpassword/${record.id}/${record.lostPasswordCode}`,
+    message: `Click here to reset your password: https://miccosukee.community/resetpassword/${record.id}/${record.lostPasswordCode}`,
   };
   const response = await awsEmailServiceAPI(valuesObj);
   if (response === 'Email Sent') {

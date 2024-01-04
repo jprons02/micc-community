@@ -158,7 +158,8 @@ const LoginForm: React.FC = () => {
           />
           <TextField
             required
-            label="Tribal ID"
+            //label="Tribal ID"
+            label="PIN"
             name="tribalId"
             value={formData.tribalId}
             onChange={handleChange}

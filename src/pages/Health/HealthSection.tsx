@@ -4,107 +4,73 @@ import HealthStaffNameSlider from '../../components/slider/HealthStaffNameSlider
 // styles
 import '../../assets/styles/css/pages/Health.css';
 
-import image1 from '../../assets/media/images/health/icons8-user-100.png';
+// staff bios
+import { staffBiosArray } from '../../data/health/bios.js';
 
 const HealthSection: React.FC = () => {
   const sectionStyle = {
     marginBottom: '40px',
   };
-  const staffArray = [
-    {
-      name: 'Staff 1',
-      image: image1,
-      years: '10',
-      experience: 'Experience 1',
-      details:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae accumsan magna, at rutrum massa. Nam ligula libero, auctor non scelerisque non, ullamcorper vitae elit. Nullam dignissim pharetra dui, a gravida lectus vestibulum in. Donec elementum massa at diam iaculis, a finibus nisi venenatis. Sed egestas leo vel gravida congue. Aenean euismod id tortor ut varius. Donec ultricies tincidunt tortor, id tincidunt sem dignissim eu. Cras sollicitudin laoreet nisi, eu semper metus.',
-    },
-    {
-      name: 'Staff 2',
-      image: image1,
-      years: '10',
-      experience: 'Experience 2',
-      details:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae accumsan magna, at rutrum massa. Nam ligula libero, auctor non scelerisque non, ullamcorper vitae elit. Nullam dignissim pharetra dui, a gravida lectus vestibulum in. Donec elementum massa at diam iaculis, a finibus nisi venenatis. Sed egestas leo vel gravida congue. Aenean euismod id tortor ut varius. Donec ultricies tincidunt tortor, id tincidunt sem dignissim eu. Cras sollicitudin laoreet nisi, eu semper metus.',
-    },
-    {
-      name: 'Staff 3',
-      image: image1,
-      years: '10',
-      experience: 'Experience 3',
-      details:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae accumsan magna, at rutrum massa. Nam ligula libero, auctor non scelerisque non, ullamcorper vitae elit. Nullam dignissim pharetra dui, a gravida lectus vestibulum in. Donec elementum massa at diam iaculis, a finibus nisi venenatis. Sed egestas leo vel gravida congue. Aenean euismod id tortor ut varius. Donec ultricies tincidunt tortor, id tincidunt sem dignissim eu. Cras sollicitudin laoreet nisi, eu semper metus.',
-    },
-    {
-      name: 'Staff 4',
-      image: image1,
-      years: '10',
-      experience: 'Experience 4',
-      details:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae accumsan magna, at rutrum massa. Nam ligula libero, auctor non scelerisque non, ullamcorper vitae elit. Nullam dignissim pharetra dui, a gravida lectus vestibulum in. Donec elementum massa at diam iaculis, a finibus nisi venenatis. Sed egestas leo vel gravida congue. Aenean euismod id tortor ut varius. Donec ultricies tincidunt tortor, id tincidunt sem dignissim eu. Cras sollicitudin laoreet nisi, eu semper metus.',
-    },
-    {
-      name: 'Staff 5',
-      image: image1,
-      years: '10',
-      experience: 'Experience 5',
-      details:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae accumsan magna, at rutrum massa. Nam ligula libero, auctor non scelerisque non, ullamcorper vitae elit. Nullam dignissim pharetra dui, a gravida lectus vestibulum in. Donec elementum massa at diam iaculis, a finibus nisi venenatis. Sed egestas leo vel gravida congue. Aenean euismod id tortor ut varius. Donec ultricies tincidunt tortor, id tincidunt sem dignissim eu. Cras sollicitudin laoreet nisi, eu semper metus.',
-    },
-    {
-      name: 'Staff 6',
-      image: image1,
-      years: '10',
-      experience: 'Experience 6',
-      details:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae accumsan magna, at rutrum massa. Nam ligula libero, auctor non scelerisque non, ullamcorper vitae elit. Nullam dignissim pharetra dui, a gravida lectus vestibulum in. Donec elementum massa at diam iaculis, a finibus nisi venenatis. Sed egestas leo vel gravida congue. Aenean euismod id tortor ut varius. Donec ultricies tincidunt tortor, id tincidunt sem dignissim eu. Cras sollicitudin laoreet nisi, eu semper metus.',
-    },
-    {
-      name: 'Staff 7',
-      image: image1,
-      years: '10',
-      experience: 'Experience 7',
-      details:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae accumsan magna, at rutrum massa. Nam ligula libero, auctor non scelerisque non, ullamcorper vitae elit. Nullam dignissim pharetra dui, a gravida lectus vestibulum in. Donec elementum massa at diam iaculis, a finibus nisi venenatis. Sed egestas leo vel gravida congue. Aenean euismod id tortor ut varius. Donec ultricies tincidunt tortor, id tincidunt sem dignissim eu. Cras sollicitudin laoreet nisi, eu semper metus.',
-    },
-  ];
 
-  const staffNameArray = staffArray.map(({ name }) => ({ name }));
+  const staffNameArray = staffBiosArray.map(({ name }: { name: string }) => ({
+    name,
+  }));
 
-  const [staffSelected, setStaffSelected] = useState('Staff 1');
+  const [staffSelected, setStaffSelected] = useState('Cassandra Osceola');
 
   const handleStaffClick = (name: string) => {
     setStaffSelected(name);
   };
 
+  const subHeaderBioStyle = {
+    fontStyle: 'italic',
+    fontSize: '14px',
+    margin: '0 0 5px 0',
+  };
+
   const renderBios = () => {
-    return staffArray.map((item) => {
-      if (item.name === staffSelected) {
-        return (
-          <div key={item.name}>
-            <div>
-              <img
-                style={{
-                  width: '100px',
-                  float: 'left',
-                  padding: '0 20px 20px 0px',
-                }}
-                src={item.image}
-                alt="staff"
-              />
+    return staffBiosArray.map(
+      (item: {
+        name: string;
+        image: string;
+        title: string;
+        years: string;
+        months: string;
+        experience: string;
+        details: string;
+      }) => {
+        if (item.name === staffSelected) {
+          return (
+            <div key={item.name}>
+              <div>
+                <img
+                  style={{
+                    width: '100px',
+                    float: 'left',
+                    padding: '0 20px 20px 0px',
+                  }}
+                  src={item.image}
+                  alt="staff"
+                />
+              </div>
+              <div>
+                <h4 style={{ marginBottom: '10px' }}>{item.name}</h4>
+                <p style={subHeaderBioStyle}>{item.title}</p>
+                <p style={subHeaderBioStyle}>
+                  {item.months === ''
+                    ? `${item.years} years serving Miccosukee`
+                    : `${item.months} months serving Miccosukee`}
+                </p>
+                <p style={subHeaderBioStyle}>{item.experience}</p>
+              </div>
+              <div style={{ clear: 'both', maxWidth: '620px' }}>
+                <p>{item.details}</p>
+              </div>
             </div>
-            <div>
-              <h4>{item.name}</h4>
-              <p>Years Serving Miccosukee: {item.years}</p>
-              <p>Experience and Qualifications: {item.experience}</p>
-            </div>
-            <div style={{ clear: 'both' }}>
-              <p>{item.details}</p>
-            </div>
-          </div>
-        );
+          );
+        }
       }
-    });
+    );
   };
 
   return (
