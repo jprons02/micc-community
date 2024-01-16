@@ -145,6 +145,7 @@ const SignupForm: React.FC = () => {
           <TextField
             required
             //label="Tribal ID"
+            type="password"
             label="PIN"
             name="tribalId"
             value={formData.tribalId}
@@ -154,6 +155,7 @@ const SignupForm: React.FC = () => {
           />
           <TextField
             required
+            type="password"
             label="Password"
             name="password"
             value={formData.password}
@@ -163,6 +165,7 @@ const SignupForm: React.FC = () => {
           />
           <TextField
             required
+            type="password"
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}

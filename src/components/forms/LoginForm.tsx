@@ -149,6 +149,7 @@ const LoginForm: React.FC = () => {
           />
           <TextField
             required
+            type="password"
             label="Password"
             name="password"
             value={formData.password}
@@ -159,6 +160,7 @@ const LoginForm: React.FC = () => {
           <TextField
             required
             //label="Tribal ID"
+            type="password"
             label="PIN"
             name="tribalId"
             value={formData.tribalId}

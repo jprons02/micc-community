@@ -104,6 +104,7 @@ const CreateNewPasswordForm: React.FC<CreateNewPasswordFormProps> = (props) => {
           </FormLabel>
           <TextField
             required
+            type="password"
             label="New Password"
             name="password"
             value={formData.password}
@@ -113,6 +114,7 @@ const CreateNewPasswordForm: React.FC<CreateNewPasswordFormProps> = (props) => {
           />
           <TextField
             required
+            type="password"
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
