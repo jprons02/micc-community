@@ -82,7 +82,7 @@ const SignupForm: React.FC = () => {
       const user = {
         firstName: formData.firstName,
         lastName: formData.lastName,
-        email: formData.email,
+        email: formData.email.toLowerCase(),
         tribalId: formData.tribalId,
         password: formData.password,
       };

@@ -52,7 +52,9 @@ const ForgotPasswordForm: React.FC = () => {
     event.preventDefault();
     setLoading(true);
     // Perform form submission logic or validation here
-    const response = await lostPasswordEmailFunction(formData.email);
+    const response = await lostPasswordEmailFunction(
+      formData.email.toLowerCase()
+    );
     setLoading(false);
     switch (response) {
       case 'Success':

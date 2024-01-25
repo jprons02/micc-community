@@ -35,6 +35,7 @@ const EmergencyNoticesList: React.FC = () => {
 
   const renderEmergencyNotices = () => {
     return sortedNotices.map((notice: any) => {
+      console.log('notice: ', notice);
       const dateTime = getReadableDate(notice.dateAdded);
       return (
         <div

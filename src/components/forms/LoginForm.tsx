@@ -142,7 +142,7 @@ const LoginForm: React.FC = () => {
             required
             label="Email"
             name="email"
-            value={formData.email}
+            value={formData.email.toLowerCase()}
             onChange={handleChange}
             fullWidth
             margin="normal"
