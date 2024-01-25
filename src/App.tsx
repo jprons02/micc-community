@@ -19,6 +19,7 @@ import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import CreateNewPassword from './pages/CreateNewPassword';
 import Calendar from './pages/Calendar';
+import Emergency from './pages/EmergencyNotices';
 import TribalNotices from './pages/TribalNotices';
 import Health from './pages/Health';
 
@@ -28,6 +29,7 @@ import WellnessEventSignup from './pages/NotLoggedIn/WellnessEventSignup';
 
 // admin pages
 import ManageTribalNotices from './pages/Admin/ManageTribalNotices';
+import ManageEmergencyNotices from './pages/Admin/ManageEmergencyNotices';
 
 // styles
 import './assets/styles/css/App.css';
@@ -106,11 +108,21 @@ const App: React.FC = () => {
         />
         {/*NEED TO BE LOGGED ADMIN*/}
         <Route
-          path="/admin/notices"
+          path="/admin/tribal-notices"
           element={
             <LoggedIn>
               <VerifyAdmin>
                 <ManageTribalNotices />
+              </VerifyAdmin>
+            </LoggedIn>
+          }
+        />
+        <Route
+          path="/admin/emergency-notices"
+          element={
+            <LoggedIn>
+              <VerifyAdmin>
+                <ManageEmergencyNotices />
               </VerifyAdmin>
             </LoggedIn>
           }
@@ -135,6 +147,7 @@ const App: React.FC = () => {
           element={<CreateNewPassword />}
         />
         <Route path="/holidaycards" element={<HolidayGreetingCards />} />
+        <Route path="/emergency" element={<Emergency />} />
         <Route
           path="/wellness-event-signup"
           element={<WellnessEventSignup />}

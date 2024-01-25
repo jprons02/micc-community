@@ -52,7 +52,7 @@ const HealthComplaintsForm: React.FC = () => {
 
     const valuesObj = {
       email: ['jronselli@miccosukee.com'],
-      subject: 'Health Complaints / Suggestions Form Submission',
+      subject: 'Health Suggestions/Grievances Form Submission',
       message: `First Name: ${formData.firstName}\nLast Name: ${formData.lastName}\nEmail: ${formData.email}\nMessage: ${formData.message}`,
     };
     const response = await awsEmailServiceAPI(valuesObj);
@@ -76,7 +76,7 @@ const HealthComplaintsForm: React.FC = () => {
       <FormPaper style={{ marginLeft: '0' }}>
         <FormControl fullWidth>
           <FormLabel component="h1" sx={{ fontSize: '22px' }}>
-            Complaints / Suggestions
+            Suggestions/Grievances
           </FormLabel>
           <TextField
             required

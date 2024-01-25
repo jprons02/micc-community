@@ -29,6 +29,20 @@ export type AddTribalNoticeObjType = {
   };
 };
 
+export type AddEmergencyNoticeObjType = {
+  tableName: string;
+  item: {
+    id: string;
+    emergencyNotice: {
+      title: string;
+      details: string;
+    };
+    name: string;
+    userId: string;
+    dateAdded: Date;
+  };
+};
+
 export type LoginFormType = {
   email: string;
   tribalId: string;

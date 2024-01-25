@@ -42,7 +42,7 @@ const HealthNav: React.FC<HealthNavProps> = ({ selectedPage, handleClick }) => {
         style={buttonStyle}
         variant={selectedPage.complaints ? 'contained' : 'outlined'}
       >
-        Complaints/Suggestions
+        Suggestions/Grievances
       </Button>
       <Button
         onClick={() => handleClick('portal')}

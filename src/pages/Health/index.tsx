@@ -69,7 +69,7 @@ const HealthIndex: React.FC = () => {
       return 'Wellness';
     }
     if (selectedPage.complaints) {
-      return 'Complaints/Suggestions';
+      return 'Suggestions/Grievances';
     }
     if (selectedPage.portal) {
       return 'Patient Portal';

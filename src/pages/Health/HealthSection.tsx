@@ -4,12 +4,15 @@ import HealthStaffNameSlider from '../../components/slider/HealthStaffNameSlider
 // styles
 import '../../assets/styles/css/pages/Health.css';
 
+// components
+import HorizontalRule from '../../components/dividers/HorizontalRule';
+
 // staff bios
 import { staffBiosArray } from '../../data/health/bios.js';
 
 const HealthSection: React.FC = () => {
   const sectionStyle = {
-    marginBottom: '40px',
+    marginBottom: '30px',
   };
 
   const staffNameArray = staffBiosArray.map(({ name }: { name: string }) => ({
@@ -73,6 +76,8 @@ const HealthSection: React.FC = () => {
     );
   };
 
+  const pStyle = { lineHeight: '1.4' };
+
   return (
     <div>
       <div style={sectionStyle}>
@@ -91,12 +96,35 @@ const HealthSection: React.FC = () => {
           day to day practices.
         </p>
       </div>
+      <HorizontalRule />
+      <div style={sectionStyle}>
+        <h4 style={{ textTransform: 'uppercase' }}>Hours</h4>
+        <p style={pStyle}>
+          <strong>Monday - Friday</strong> <br />
+          8:00AM - 11:00PM
+        </p>
+        <p style={pStyle}>
+          <strong>Saturday - Sunday</strong> <br />
+          9:00AM - 9:00PM
+        </p>
+      </div>
+      <HorizontalRule />
       <div style={sectionStyle}>
         <h4 style={{ textTransform: 'uppercase' }}>Contact</h4>
-        <p>Hours: 8:30 AM - 4:30 PM</p>
-        <p>Phone: xxx-xxx-xxxx</p>
-        <p>Email: example@domain.com</p>
+        <p style={pStyle}>
+          <strong>Phone:</strong> <br />
+          305-894-2387
+        </p>
+        <p style={pStyle}>
+          <strong>Fax 1:</strong> <br />
+          305-894-1187
+        </p>
+        <p style={pStyle}>
+          <strong>Fax 2:</strong> <br />
+          305-894-1186
+        </p>
       </div>
+      <HorizontalRule />
       <div style={sectionStyle}>
         <h4 style={{ textTransform: 'uppercase' }}>Events</h4>
         <p>
@@ -104,6 +132,7 @@ const HealthSection: React.FC = () => {
           different calendar
         </p>
       </div>
+      <HorizontalRule />
       <div style={sectionStyle}>
         <h4 style={{ textTransform: 'uppercase' }}>Meet Our Staff</h4>
         <div
@@ -120,6 +149,7 @@ const HealthSection: React.FC = () => {
         </div>
         <div style={{ marginBottom: '60px' }}>{renderBios()}</div>
       </div>
+      <HorizontalRule />
       <div style={sectionStyle}>
         <h4 style={{ textTransform: 'uppercase' }}>
           Culturally Sensitive and pertinent Health Education

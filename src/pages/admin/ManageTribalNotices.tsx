@@ -31,7 +31,11 @@ const ManageTribalNotices: React.FC = () => {
 
   const tribalNoticesCall = async () => {
     const response = await getAllItemsAPI(keys.webTableName);
-    setTribalNotices(await response);
+    // Filter objects with the key "tribalNotice"
+    const tribalNotices = response.filter((obj: any) =>
+      obj.hasOwnProperty('tribalNotice')
+    );
+    setTribalNotices(await tribalNotices);
   };
 
   return (

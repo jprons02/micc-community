@@ -29,6 +29,12 @@ const HomeCards: React.FC = () => {
 
   const standardServices = [
     {
+      title: 'Emergency',
+      link: '/emergency',
+      color: '#ff873a',
+      disabled: false,
+    },
+    {
       title: 'Tribal Notices',
       link: '/tribal-notices',
       color: '#128324',
@@ -62,8 +68,13 @@ const HomeCards: React.FC = () => {
 
   const adminTools = [
     {
+      title: 'Manage Emergency Notices',
+      link: '/admin/emergency-notices',
+      disabled: isAdmin() ? false : true,
+    },
+    {
       title: 'Manage Tribal Notices',
-      link: '/admin/notices',
+      link: '/admin/tribal-notices',
       disabled: isAdmin() ? false : true,
     },
   ];
