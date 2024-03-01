@@ -37,11 +37,13 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
     tribalId: string;
     emergencyNoticeTitle: string;
     emergencyNoticeDetails: string;
+    resourceLinks: Array<string>;
   };
   const [formData, setFormData] = useState<formData>({
     tribalId: '',
     emergencyNoticeTitle: '',
     emergencyNoticeDetails: '',
+    resourceLinks: [''],
   });
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -52,11 +54,19 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle changes for array fields
+  const handleArrayChange = (index: number, value: string) => {
+    const updatedLinks = [...formData.resourceLinks];
+    updatedLinks[index] = value;
+    setFormData({ ...formData, resourceLinks: updatedLinks });
+  };
+
   const today = new Date();
 
   const emergencyNotice = {
     title: formData.emergencyNoticeTitle,
     details: formData.emergencyNoticeDetails,
+    resourceLinks: formData.resourceLinks,
   };
 
   const AddEmergencyNoticeObj: AddEmergencyNoticeObjType = {
@@ -76,6 +86,7 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
       tribalId: '',
       emergencyNoticeTitle: '',
       emergencyNoticeDetails: '',
+      resourceLinks: [],
     });
   };
 
@@ -132,6 +143,30 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
             name="emergencyNoticeDetails"
             value={formData.emergencyNoticeDetails}
             onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Resource Link 1"
+            name="resourceLinks"
+            value={formData.resourceLinks[0] || ''}
+            onChange={(e) => handleArrayChange(0, e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Resource Link 2"
+            name="resourceLinks"
+            value={formData.resourceLinks[1] || ''}
+            onChange={(e) => handleArrayChange(1, e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Resource Link 3"
+            name="resourceLinks"
+            value={formData.resourceLinks[2] || ''}
+            onChange={(e) => handleArrayChange(2, e.target.value)}
             fullWidth
             margin="normal"
           />

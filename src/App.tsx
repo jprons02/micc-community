@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 // custom component
 import LoggedIn from './components/wrappers/LoggedIn';
 import VerifyAdmin from './components/wrappers/VerifyAdmin';
 import LogoutButton from './components/header/LogoutButton';
+import LoginButton from './components/header/LoginButton';
 import HomeButton from './components/header/HomeButton';
 import TransitionAlert from './components/alerts/TransitionAlert';
 
@@ -19,7 +20,7 @@ import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import CreateNewPassword from './pages/CreateNewPassword';
 import Calendar from './pages/Calendar';
-import Emergency from './pages/EmergencyNotices';
+import EmergencyNoticePage from './pages/Emergency';
 import TribalNotices from './pages/TribalNotices';
 import Health from './pages/Health';
 
@@ -39,6 +40,7 @@ import 'slick-carousel/slick/slick-theme.css';
 // material-ui
 import Alert from '@mui/material/Alert';
 import { Container } from '@mui/material';
+import { render } from '@testing-library/react';
 
 // Alerts references, do not delete:
 // Example of closable alert: <TransitionAlert severity="info" text={'This is an info alert — check it out!'}/>
@@ -47,9 +49,31 @@ import { Container } from '@mui/material';
 const App: React.FC = () => {
   const isLoggedIn = useContext(LoginContext);
 
-  return (
-    <div>
-      {!isLoggedIn ? null : (
+  const location = useLocation();
+  // Access the pathname from the location object
+  const currentPage = location.pathname;
+
+  const renderTopNavButtons = () => {
+    if (currentPage === '/login') {
+      return '';
+    }
+    if (!isLoggedIn) {
+      return (
+        <Container maxWidth="lg">
+          <div
+            style={{
+              position: 'relative',
+              marginTop: '20px',
+              padding: '55px 0 10px 0',
+            }}
+          >
+            <LoginButton />
+          </div>
+        </Container>
+      );
+    }
+    if (isLoggedIn) {
+      return (
         <Container maxWidth="lg">
           <div
             style={{
@@ -69,7 +93,13 @@ const App: React.FC = () => {
             />
           </div>
         </Container>
-      )}
+      );
+    }
+  };
+
+  return (
+    <div>
+      {renderTopNavButtons()}
       <Routes>
         {/*NEED TO BE LOGGED IN*/}
         {/*NEED TO BE LOGGED IN*/}
@@ -147,11 +177,12 @@ const App: React.FC = () => {
           element={<CreateNewPassword />}
         />
         <Route path="/holidaycards" element={<HolidayGreetingCards />} />
-        <Route path="/emergency" element={<Emergency />} />
+
         <Route
           path="/wellness-event-signup"
           element={<WellnessEventSignup />}
         />
+        <Route path="/emergency" element={<EmergencyNoticePage />} />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </div>

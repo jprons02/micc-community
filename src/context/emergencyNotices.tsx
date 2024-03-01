@@ -6,7 +6,7 @@ const EmergencyNoticesContext = createContext<any>(null);
 const SetEmergencyNoticesContext = createContext<any>(null);
 
 const EmergencyNoticesProvider = ({ children }: any) => {
-  const [emergencyNotices, setEmergencyNotices] = useState<any>([{}]);
+  const [emergencyNotices, setEmergencyNotices] = useState<any>([]);
   return (
     <EmergencyNoticesContext.Provider value={emergencyNotices}>
       <SetEmergencyNoticesContext.Provider value={setEmergencyNotices}>
