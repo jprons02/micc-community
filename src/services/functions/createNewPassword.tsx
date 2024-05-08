@@ -1,5 +1,5 @@
 import { getItemByAttribute } from '../APIs/getItemByAttribute';
-import { updateUserAPI } from '../APIs/updateUserAPI';
+import { updateRecordAPI } from '../APIs/updateRecordAPI';
 import { keys } from '../../data/keys';
 import { encryptPasswordAPI } from '../APIs/bcryptAPIs';
 import { removeAttributeFromUserAPI } from '../APIs/removeAttributeFromUserAPI';
@@ -27,7 +27,7 @@ export const createNewPassword = async (id: string, newPassword: string) => {
       value: password,
     },
   };
-  const updateResponse = await updateUserAPI(updateObj);
+  const updateResponse = await updateRecordAPI(updateObj);
 
   // Remove the lostPasswordCode from the database once used.
   if (updateResponse === 'Item updated') {

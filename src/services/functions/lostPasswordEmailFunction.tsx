@@ -1,6 +1,6 @@
 import { awsEmailServiceAPI } from '../APIs/awsEmailServiceAPI';
 import { getItemByAttribute } from '../APIs/getItemByAttribute';
-import { updateUserAPI } from '../APIs/updateUserAPI';
+import { updateRecordAPI } from '../APIs/updateRecordAPI';
 import { keys } from '../../data/keys';
 
 // Look up user input email in database
@@ -22,7 +22,7 @@ const generateAndStoreLostPasswordCode = async (record: any) => {
       value: lostPasswordCode.toString(),
     },
   };
-  const updateResponse = await updateUserAPI(updateObj);
+  const updateResponse = await updateRecordAPI(updateObj);
   return updateResponse;
 };
 

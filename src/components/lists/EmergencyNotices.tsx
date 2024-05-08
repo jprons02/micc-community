@@ -1,29 +1,106 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { useSnackbar } from '../../lib/notistack';
+//keys
+import { keys } from '../../data/keys';
+// functions
+import { deleteAttributeFromRecord } from '../../services/functions/deleteAttributeFromRecord';
+
+// material-ui
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // custom components
 import HorizontalRule from '../dividers/HorizontalRule';
 
 // context
 import { EmergencyNoticesContext } from '../../context/emergencyNotices';
+import { UserContext } from '../../context/userContext';
 
 const EmergencyNoticesList: React.FC = () => {
+  const user = useContext(UserContext);
+  const isAdmin = () => {
+    if (user.type) {
+      if (user.type === 'admin') {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const emergencyNotices = useContext(EmergencyNoticesContext);
+
+  const [emergencyNoticesState, setEmergencyNoticesState] = useState<
+    any[] | false
+  >([]);
+
+  // Sorts and sets notices state on load.
+  useEffect(() => {
+    sortedNotices();
+  }, [emergencyNotices]);
+
+  const [loadingStates, setLoadingStates] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  // variant could be success, error, warning, info, or default
+  // example use) enqueueSnackbar("Form submitted successfully!", { variant: "success" });
+  const { enqueueSnackbar } = useSnackbar();
 
   const emergencyNoticesExist = () => {
     if (!emergencyNotices || emergencyNotices.length === 0) return false;
     return true;
   };
 
-  const sortedNotices = () => {
+  const sortedNotices = (): any[] | false => {
     if (emergencyNoticesExist()) {
-      const newArray = emergencyNotices.slice(); // Create a copy of the array using slice()
+      const filteredArray = emergencyNotices.filter(
+        (notice: any) => notice.emergencyNotice !== null
+      );
+      const newArray = [...filteredArray];
       newArray.sort(
         (a: any, b: any) =>
           new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
       );
-      return newArray; // Return the sorted array
+      setEmergencyNoticesState(newArray);
     }
     return false;
+  };
+
+  const deleteNotice = async (id: string) => {
+    setLoadingStates((prevLoadingStates) => ({
+      ...prevLoadingStates,
+      [id]: true, // Set loading state to true for the specific button being clicked
+    }));
+
+    const response = await deleteAttributeFromRecord(
+      keys.webTableName,
+      id,
+      'emergencyNotice'
+    );
+
+    if (response === 'Item attribute deleted') {
+      enqueueSnackbar('Notice successfully deleted.', {
+        variant: 'success',
+      });
+
+      // Update the notices state by filtering out the deleted notice
+      setEmergencyNoticesState((prevNotices) =>
+        Array.isArray(prevNotices)
+          ? prevNotices.filter(
+              (emergencyNoticesState: any) => emergencyNoticesState.id !== id
+            )
+          : []
+      );
+    } else {
+      enqueueSnackbar('Server error, please try again.', {
+        variant: 'error',
+      });
+    }
+
+    setLoadingStates((prevLoadingStates) => ({
+      ...prevLoadingStates,
+      [id]: false, // Set loading state back to false after the action is complete
+    }));
   };
 
   const getReadableDate = (dateString: string) => {
@@ -42,11 +119,44 @@ const EmergencyNoticesList: React.FC = () => {
     return easternTimeString;
   };
 
+  const renderDeleteButton = (id: string) => {
+    // if user is admin, show delete button
+    if (!isAdmin()) return null;
+
+    return (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Button
+          onClick={() => deleteNotice(id)}
+          variant="contained"
+          disabled={loadingStates[id]}
+          sx={{ mt: 3, mb: 2, position: 'relative' }} // Add position: relative to the button
+        >
+          <span style={loadingStates[id] ? { visibility: 'hidden' } : {}}>
+            Delete Notice
+          </span>
+          {loadingStates[id] && (
+            <CircularProgress
+              size={24}
+              sx={{
+                position: 'absolute',
+                transform: 'translate(-50%, -50%)', // Center the spinner
+              }}
+            />
+          )}
+        </Button>
+      </div>
+    );
+  };
+
   const renderEmergencyNotices = () => {
-    if (!sortedNotices())
+    if (
+      !emergencyNoticesState ||
+      !Array.isArray(emergencyNoticesState) ||
+      emergencyNoticesState.length === 0
+    )
       return <p style={{ marginTop: '30px' }}>No emergencies listed.</p>;
 
-    return sortedNotices().map((notice: any) => {
+    return emergencyNoticesState.map((notice: any, index: number) => {
       const dateTime = getReadableDate(notice.dateAdded);
       const resourceLinksArray = () => {
         if (notice.emergencyNotice && notice.emergencyNotice.resourceLinks) {
@@ -61,17 +171,20 @@ const EmergencyNoticesList: React.FC = () => {
             );
           });
         }
+        return null;
       };
       const renderResourceLinks = () => {
-        if (notice.emergencyNotice.hasOwnProperty('resourceLinks')) {
+        if (
+          notice.emergencyNotice &&
+          notice.emergencyNotice.resourceLinks[0] !== ''
+        ) {
           return (
             <p style={{ fontSize: '14px', marginBottom: '30px' }}>
               {notice.emergencyNotice ? resourceLinksArray() : 'Loading'}
             </p>
           );
-        } else {
-          return '';
         }
+        return null;
       };
 
       return (
@@ -104,11 +217,10 @@ const EmergencyNoticesList: React.FC = () => {
           >
             {notice.name}
           </p>
-          {/* if sortedNotices has length longer than 1 then dont use HorizontalRule and don't use HorizontalRule on the last mapped item*/}
-          {sortedNotices.length > 1 &&
-            sortedNotices().indexOf(notice) !== sortedNotices().length - 1 && (
-              <HorizontalRule />
-            )}
+          {renderDeleteButton(notice.id)}
+          {Array.isArray(emergencyNoticesState) &&
+            emergencyNoticesState.length > 1 &&
+            index !== emergencyNoticesState.length - 1 && <HorizontalRule />}
         </div>
       );
     });

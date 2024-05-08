@@ -3,7 +3,7 @@
 import { keys } from '../../data/keys';
 import { updateUserObjType } from '../../customTypes';
 
-export const updateUserAPI = async (updateObj: updateUserObjType) => {
+export const updateRecordAPI = async (updateObj: updateUserObjType) => {
   // Send a PUT request
   const response = await fetch(
     'https://p70xq17396.execute-api.us-east-1.amazonaws.com/prod/DynamoDB/update-item',

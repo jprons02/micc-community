@@ -60,7 +60,7 @@ export type updateUserObjType = {
   id: string;
   attributeObj: {
     name: string;
-    value: string;
+    value: string | null;
   };
 };
 
