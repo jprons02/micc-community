@@ -29,8 +29,8 @@ import HolidayGreetingCards from './pages/Holiday/HolidayGreetingCards';
 import WellnessEventSignup from './pages/NotLoggedIn/WellnessEventSignup';
 
 // admin pages
-import ManageTribalNotices from './pages/Admin/ManageTribalNotices';
-import ManageEmergencyNotices from './pages/Admin/ManageEmergencyNotices';
+import ManageTribalNotices from './pages/admin/ManageTribalNotices';
+import ManageEmergencyNotices from './pages/admin/ManageEmergencyNotices';
 
 // styles
 import './assets/styles/css/App.css';
