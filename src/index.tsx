@@ -17,6 +17,7 @@ import { UserProvider } from './context/userContext';
 import { CalendarEventsProvider } from './context/calendarEvents';
 import { TribalNoticesProvider } from './context/tribalNotices';
 import { EmergencyNoticesProvider } from './context/emergencyNotices';
+import { SnackbarRestaurantProvider } from './context/snackbar';
 
 export const muiCache = createCache({
   key: 'mui',
@@ -36,9 +37,11 @@ root.render(
               <CalendarEventsProvider>
                 <TribalNoticesProvider>
                   <EmergencyNoticesProvider>
+                    <SnackbarRestaurantProvider>
                     <SnackbarProvider maxSnack={3}>
                       <App />
                     </SnackbarProvider>
+                    </SnackbarRestaurantProvider>
                   </EmergencyNoticesProvider>
                 </TribalNoticesProvider>
               </CalendarEventsProvider>

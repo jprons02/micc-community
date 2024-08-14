@@ -55,12 +55,12 @@ export type sesObjType = {
   message: string;
 };
 
-export type updateUserObjType = {
+export type updateRecordObjType = {
   table: string;
   id: string;
   attributeObj: {
     name: string;
-    value: string | null;
+    value: any;
   };
 };
 

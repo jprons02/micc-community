@@ -23,6 +23,7 @@ import Calendar from './pages/Calendar';
 import EmergencyNoticePage from './pages/Emergency';
 import TribalNotices from './pages/TribalNotices';
 import Health from './pages/Health';
+import Snackbar from './pages/Snackbar';
 
 // no login pages
 import HolidayGreetingCards from './pages/Holiday/HolidayGreetingCards';
@@ -31,6 +32,7 @@ import WellnessEventSignup from './pages/NotLoggedIn/WellnessEventSignup';
 // admin pages
 import ManageTribalNotices from './pages/admin/ManageTribalNotices';
 import ManageEmergencyNotices from './pages/admin/ManageEmergencyNotices';
+import ManageSnackbar from './pages/admin/ManageSnackbar';
 
 // styles
 import './assets/styles/css/App.css';
@@ -157,6 +159,16 @@ const App: React.FC = () => {
             </LoggedIn>
           }
         />
+        <Route
+          path="/admin/managesnackbar"
+          element={
+            <LoggedIn>
+              <VerifyAdmin>
+                <ManageSnackbar />
+              </VerifyAdmin>
+            </LoggedIn>
+          }
+        />
         {/*NEED TO BE LOGGED ADMIN*/}
         <Route
           path="/calendar"
@@ -183,6 +195,7 @@ const App: React.FC = () => {
           element={<WellnessEventSignup />}
         />
         <Route path="/emergency" element={<EmergencyNoticePage />} />
+        <Route path="/snackbar" element={<Snackbar />} />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </div>
