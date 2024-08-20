@@ -1,33 +1,28 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSnackbar } from '../../lib/notistack';
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "../../lib/notistack";
 
 // material-ui
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import CircularProgress from '@mui/material/CircularProgress';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import { FormPaper } from '../../assets/styles/styledComponents/formPaper';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import { FormPaper } from "../../assets/styles/styledComponents/formPaper";
 
-import { keys } from '../../data/keys';
-import { AddEmergencyNoticeObjType } from '../../customTypes';
-import { addEmergencyNoticeAPI } from '../../services/APIs/addEmergencyNoticeAPI';
+import { keys } from "../../data/keys";
+import { AddEmergencyNoticeObjType } from "../../customTypes";
+import { addEmergencyNoticeAPI } from "../../services/APIs/addEmergencyNoticeAPI";
+import { getAllItemsAPI } from "../../services/APIs/getAllItemsAPI";
 
 // context
-import { UserContext } from '../../context/userContext';
+import { UserContext } from "../../context/userContext";
+import { SetWebTableDataContext } from "../../context/webTableContext";
 
-// Add prop type
-type AddEmergencyNoticeProps = {
-  rerenderNotices: () => void;
-};
-
-const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
-  rerenderNotices,
-}) => {
-  let navigate = useNavigate();
+const AddEmergencyNotice: React.FC = () => {
   const user = useContext(UserContext);
   let [error, setError] = useState<string | null>(null);
+  const setWebTableData = useContext(SetWebTableDataContext);
 
   // variant could be success, error, warning, info, or default
   // example use) enqueueSnackbar("Form submitted successfully!", { variant: "success" });
@@ -40,10 +35,10 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
     resourceLinks: Array<string>;
   };
   const [formData, setFormData] = useState<formData>({
-    tribalId: '',
-    emergencyNoticeTitle: '',
-    emergencyNoticeDetails: '',
-    resourceLinks: [''],
+    tribalId: "",
+    emergencyNoticeTitle: "",
+    emergencyNoticeDetails: "",
+    resourceLinks: [""],
   });
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -83,11 +78,17 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
   // function that clears form data on submit
   const clearFormData = () => {
     setFormData({
-      tribalId: '',
-      emergencyNoticeTitle: '',
-      emergencyNoticeDetails: '',
+      tribalId: "",
+      emergencyNoticeTitle: "",
+      emergencyNoticeDetails: "",
       resourceLinks: [],
     });
+  };
+
+  // Keep context up to date and rerenders when updated.
+  const refreshWebTableDataContext = async () => {
+    const response = await getAllItemsAPI(keys.webTableName);
+    setWebTableData(response);
   };
 
   const handleSubmit = async (event: any) => {
@@ -97,16 +98,16 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
     // Perform form submission logic or validation here
     const response = await addEmergencyNoticeAPI(AddEmergencyNoticeObj);
 
-    if (response === 'Item added') {
-      enqueueSnackbar('Notice successfully created!', {
-        variant: 'success',
+    if (response === "Item added") {
+      enqueueSnackbar("Notice successfully created!", {
+        variant: "success",
       });
       clearFormData();
-      rerenderNotices();
+      await refreshWebTableDataContext();
     } else {
-      setError('Server error');
-      enqueueSnackbar('Server error, please try again.', {
-        variant: 'error',
+      setError("Server error");
+      enqueueSnackbar("Server error, please try again.", {
+        variant: "error",
       });
     }
     setLoading(false);
@@ -114,9 +115,9 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormPaper style={{ marginLeft: '0' }}>
+      <FormPaper style={{ marginLeft: "0" }}>
         <FormControl fullWidth>
-          <FormLabel component="h1" sx={{ fontSize: '22px' }}>
+          <FormLabel component="h1" sx={{ fontSize: "22px" }}>
             Create Emergency Notice
           </FormLabel>
           <TextField
@@ -149,7 +150,7 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
           <TextField
             label="Resource Link 1"
             name="resourceLinks"
-            value={formData.resourceLinks[0] || ''}
+            value={formData.resourceLinks[0] || ""}
             onChange={(e) => handleArrayChange(0, e.target.value)}
             fullWidth
             margin="normal"
@@ -157,7 +158,7 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
           <TextField
             label="Resource Link 2"
             name="resourceLinks"
-            value={formData.resourceLinks[1] || ''}
+            value={formData.resourceLinks[1] || ""}
             onChange={(e) => handleArrayChange(1, e.target.value)}
             fullWidth
             margin="normal"
@@ -165,12 +166,12 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
           <TextField
             label="Resource Link 3"
             name="resourceLinks"
-            value={formData.resourceLinks[2] || ''}
+            value={formData.resourceLinks[2] || ""}
             onChange={(e) => handleArrayChange(2, e.target.value)}
             fullWidth
             margin="normal"
           />
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: "relative" }}>
             <Button
               type="submit"
               fullWidth
@@ -178,7 +179,7 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
               disabled={loading === true}
               sx={{ mt: 3, mb: 2 }}
             >
-              <span style={loading ? { visibility: 'hidden' } : {}}>
+              <span style={loading ? { visibility: "hidden" } : {}}>
                 Create Notice
               </span>
             </Button>
@@ -186,11 +187,11 @@ const AddEmergencyNotice: React.FC<AddEmergencyNoticeProps> = ({
               <CircularProgress
                 size={24}
                 sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  marginTop: '-8px',
-                  marginLeft: '-12px',
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  marginTop: "-8px",
+                  marginLeft: "-12px",
                 }}
               />
             )}

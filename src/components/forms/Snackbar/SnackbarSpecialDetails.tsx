@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useSnackbar } from "../../../lib/notistack";
 import {
   FormControl,
@@ -9,23 +9,35 @@ import {
 } from "@mui/material";
 import { FormPaper } from "../../../assets/styles/styledComponents/formPaper";
 import { updateRecordObjType } from "../../../customTypes";
-import { updateRecordAPI } from "../../../services/APIs/updateRecordAPI";
 
+// api
+import { updateRecordAPI } from "../../../services/APIs/updateRecordAPI";
+import { getAllItemsAPI } from "../../../services/APIs/getAllItemsAPI";
+
+// keys
 import { keys } from "../../../data/keys";
+
+// context
+import { SetWebTableDataContext } from "../../../context/webTableContext";
 
 type SnackbarSpecialFormProps = {
   rerenderSnackbarInfo: () => void;
 };
 
-const SnackbarSpecialForm: React.FC<SnackbarSpecialFormProps> = ({
-  rerenderSnackbarInfo,
-}) => {
+const SnackbarSpecialForm: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [snackbarSpecial, setSnackbarSpecial] = useState("");
   const [loading, setLoading] = useState(false);
+  const setWebTableData = useContext(SetWebTableDataContext);
 
   const clearForm = () => {
     setSnackbarSpecial("");
+  };
+
+  // Keep context up to date and rerenders when updated.
+  const refreshWebTableDataContext = async () => {
+    const response = await getAllItemsAPI(keys.webTableName);
+    setWebTableData(response);
   };
 
   const handleChange = (event: any) => {
@@ -58,7 +70,7 @@ const SnackbarSpecialForm: React.FC<SnackbarSpecialFormProps> = ({
       const response = await updateRecordAPI(snackbarSpecialObj);
       if (response === "Item updated") {
         enqueueSnackbar("Snackbar Special Updated.", { variant: "success" });
-        rerenderSnackbarInfo();
+        await refreshWebTableDataContext();
         clearForm();
       } else {
         throw new Error("Update failed");

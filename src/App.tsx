@@ -1,54 +1,68 @@
-import React, { useContext } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 // custom component
-import LoggedIn from './components/wrappers/LoggedIn';
-import VerifyAdmin from './components/wrappers/VerifyAdmin';
-import LogoutButton from './components/header/LogoutButton';
-import LoginButton from './components/header/LoginButton';
-import HomeButton from './components/header/HomeButton';
-import TransitionAlert from './components/alerts/TransitionAlert';
+import LoggedIn from "./components/wrappers/LoggedIn";
+import VerifyAdmin from "./components/wrappers/VerifyAdmin";
+import LogoutButton from "./components/header/LogoutButton";
+import LoginButton from "./components/header/LoginButton";
+import HomeButton from "./components/header/HomeButton";
+import TransitionAlert from "./components/alerts/TransitionAlert";
 
 // context
-import { SetLoginContext } from './context/loginContext';
-import { LoginContext } from './context/loginContext';
+import { LoginContext } from "./context/loginContext";
+import { SetWebTableDataContext } from "./context/webTableContext";
+
+// data
+import { keys } from "./data/keys";
+
+// api
+import { getAllItemsAPI } from "./services/APIs/getAllItemsAPI";
 
 // pages
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import ForgotPassword from './pages/ForgotPassword';
-import CreateNewPassword from './pages/CreateNewPassword';
-import Calendar from './pages/Calendar';
-import EmergencyNoticePage from './pages/Emergency';
-import TribalNotices from './pages/TribalNotices';
-import Health from './pages/Health';
-import Snackbar from './pages/Snackbar';
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
+import CreateNewPassword from "./pages/CreateNewPassword";
+import Calendar from "./pages/Calendar";
+import EmergencyNoticePage from "./pages/Emergency";
+import TribalNotices from "./pages/TribalNotices";
+import Health from "./pages/Health";
+import Snackbar from "./pages/Snackbar";
 
 // no login pages
-import HolidayGreetingCards from './pages/Holiday/HolidayGreetingCards';
-import WellnessEventSignup from './pages/NotLoggedIn/WellnessEventSignup';
+import HolidayGreetingCards from "./pages/Holiday/HolidayGreetingCards";
+import WellnessEventSignup from "./pages/NotLoggedIn/WellnessEventSignup";
 
 // admin pages
-import ManageTribalNotices from './pages/admin/ManageTribalNotices';
-import ManageEmergencyNotices from './pages/admin/ManageEmergencyNotices';
-import ManageSnackbar from './pages/admin/ManageSnackbar';
+import ManageTribalNotices from "./pages/admin/ManageTribalNotices";
+import ManageEmergencyNotices from "./pages/admin/ManageEmergencyNotices";
+import ManageSnackbar from "./pages/admin/ManageSnackbar";
 
 // styles
-import './assets/styles/css/App.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import "./assets/styles/css/App.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // material-ui
-import Alert from '@mui/material/Alert';
-import { Container } from '@mui/material';
-import { render } from '@testing-library/react';
+import { Container } from "@mui/material";
 
 // Alerts references, do not delete:
 // Example of closable alert: <TransitionAlert severity="info" text={'This is an info alert — check it out!'}/>
 // severity attribute options: 'error' | 'warning' | 'info' | 'success'
 
 const App: React.FC = () => {
+  const setWebTableData = useContext(SetWebTableDataContext);
+
+  useEffect(() => {
+    const getWebData = async () => {
+      const response = await getAllItemsAPI(keys.webTableName);
+      setWebTableData(await response);
+    };
+    getWebData();
+  }, []);
+
   const isLoggedIn = useContext(LoginContext);
 
   const location = useLocation();
@@ -56,17 +70,17 @@ const App: React.FC = () => {
   const currentPage = location.pathname;
 
   const renderTopNavButtons = () => {
-    if (currentPage === '/login') {
-      return '';
+    if (currentPage === "/login") {
+      return "";
     }
     if (!isLoggedIn) {
       return (
         <Container maxWidth="lg">
           <div
             style={{
-              position: 'relative',
-              marginTop: '20px',
-              padding: '55px 0 10px 0',
+              position: "relative",
+              marginTop: "20px",
+              padding: "55px 0 10px 0",
             }}
           >
             <LoginButton />
@@ -79,19 +93,19 @@ const App: React.FC = () => {
         <Container maxWidth="lg">
           <div
             style={{
-              position: 'relative',
-              marginTop: '20px',
-              padding: '10px 0',
+              position: "relative",
+              marginTop: "20px",
+              padding: "10px 0",
             }}
           >
             <HomeButton />
             <LogoutButton />
           </div>
-          <div style={{ margin: '50px 0' }}>
+          <div style={{ margin: "50px 0" }}>
             <h1>miccosukee.community</h1>
             <TransitionAlert
               severity="info"
-              text={'This is an info alert — check it out!'}
+              text={"This is an info alert — check it out!"}
             />
           </div>
         </Container>

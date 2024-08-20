@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useSnackbar } from "../../../lib/notistack";
 import {
   FormControl,
@@ -11,23 +11,31 @@ import {
 } from "@mui/material";
 import { FormPaper } from "../../../assets/styles/styledComponents/formPaper";
 import { updateRecordObjType } from "../../../customTypes";
-import { updateRecordAPI } from "../../../services/APIs/updateRecordAPI";
 
+// api
+import { updateRecordAPI } from "../../../services/APIs/updateRecordAPI";
+import { getAllItemsAPI } from "../../../services/APIs/getAllItemsAPI";
+
+// keys
 import { keys } from "../../../data/keys";
 
-type RestaurantStatusFormProps = {
-  rerenderSnackbarInfo: () => void;
-};
+// context
+import { SetWebTableDataContext } from "../../../context/webTableContext";
 
-const RestaurantStatusForm: React.FC<RestaurantStatusFormProps> = ({
-  rerenderSnackbarInfo,
-}) => {
+const RestaurantStatusForm: React.FC = (rerenderSnackbarInfo) => {
   const { enqueueSnackbar } = useSnackbar();
   const [restaurantStatus, setRestaurantStatus] = useState("");
   const [loading, setLoading] = useState(false);
+  const setWebTableData = useContext(SetWebTableDataContext);
 
   const clearForm = () => {
     setRestaurantStatus("");
+  };
+
+  // Keep context up to date and rerenders when updated.
+  const refreshWebTableDataContext = async () => {
+    const response = await getAllItemsAPI(keys.webTableName);
+    setWebTableData(response);
   };
 
   const handleChange = (event: any) => {
@@ -60,7 +68,7 @@ const RestaurantStatusForm: React.FC<RestaurantStatusFormProps> = ({
       const response = await updateRecordAPI(restaurantStatusObj);
       if (response === "Item updated") {
         enqueueSnackbar("Restaurant Status Updated.", { variant: "success" });
-        rerenderSnackbarInfo();
+        await refreshWebTableDataContext();
         clearForm();
       } else {
         throw new Error("Update failed");

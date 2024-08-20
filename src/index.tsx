@@ -1,31 +1,30 @@
 //https://blog.webdevsimplified.com/2022-07/react-folder-structure/
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './assets/styles/css/index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./assets/styles/css/index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+import { BrowserRouter } from "react-router-dom";
 
 // Providers
-import { ThemeProvider } from '@mui/material/styles';
-import { SnackbarProvider } from './lib/notistack';
-import { LoginProvider } from './context/loginContext';
-import { UserProvider } from './context/userContext';
-import { CalendarEventsProvider } from './context/calendarEvents';
-import { TribalNoticesProvider } from './context/tribalNotices';
-import { EmergencyNoticesProvider } from './context/emergencyNotices';
-import { SnackbarRestaurantProvider } from './context/snackbar';
+import { ThemeProvider } from "@mui/material/styles";
+// snackbar is not a restaurant - it is the "toast" message that pops up on the bottom of the screen after success/failure of an action
+import { SnackbarProvider } from "./lib/notistack";
+import { LoginProvider } from "./context/loginContext";
+import { UserProvider } from "./context/userContext";
+import { CalendarEventsProvider } from "./context/calendarEvents";
+import { WebTableDataProvider } from "./context/webTableContext";
 
 export const muiCache = createCache({
-  key: 'mui',
+  key: "mui",
   prepend: true,
 });
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
@@ -35,15 +34,11 @@ root.render(
           <LoginProvider>
             <UserProvider>
               <CalendarEventsProvider>
-                <TribalNoticesProvider>
-                  <EmergencyNoticesProvider>
-                    <SnackbarRestaurantProvider>
-                    <SnackbarProvider maxSnack={3}>
-                      <App />
-                    </SnackbarProvider>
-                    </SnackbarRestaurantProvider>
-                  </EmergencyNoticesProvider>
-                </TribalNoticesProvider>
+                <SnackbarProvider maxSnack={3}>
+                  <WebTableDataProvider>
+                    <App />
+                  </WebTableDataProvider>
+                </SnackbarProvider>
               </CalendarEventsProvider>
             </UserProvider>
           </LoginProvider>

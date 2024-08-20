@@ -1,33 +1,31 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSnackbar } from '../../lib/notistack';
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "../../lib/notistack";
 
 // material-ui
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import CircularProgress from '@mui/material/CircularProgress';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import { FormPaper } from '../../assets/styles/styledComponents/formPaper';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import { FormPaper } from "../../assets/styles/styledComponents/formPaper";
+import { AddTribalNoticeObjType } from "../../customTypes";
 
-import { keys } from '../../data/keys';
-import { AddTribalNoticeObjType } from '../../customTypes';
-import { addTribalNoticeAPI } from '../../services/APIs/addTribalNoticeAPI';
+// keys
+import { keys } from "../../data/keys";
+
+// api
+import { addTribalNoticeAPI } from "../../services/APIs/addTribalNoticeAPI";
+import { getAllItemsAPI } from "../../services/APIs/getAllItemsAPI";
 
 // context
-import { UserContext } from '../../context/userContext';
+import { UserContext } from "../../context/userContext";
+import { SetWebTableDataContext } from "../../context/webTableContext";
 
-// Add prop type
-type AddTribalNoticeProps = {
-  rerenderNotices: () => void;
-};
-
-const AddTribalNotice: React.FC<AddTribalNoticeProps> = ({
-  rerenderNotices,
-}) => {
-  let navigate = useNavigate();
+const AddTribalNotice: React.FC = () => {
   const user = useContext(UserContext);
   let [error, setError] = useState<string | null>(null);
+  const setWebTableData = useContext(SetWebTableDataContext);
 
   // variant could be success, error, warning, info, or default
   // example use) enqueueSnackbar("Form submitted successfully!", { variant: "success" });
@@ -38,8 +36,8 @@ const AddTribalNotice: React.FC<AddTribalNoticeProps> = ({
     tribalNotice: string;
   };
   const [formData, setFormData] = useState<formData>({
-    tribalId: '',
-    tribalNotice: '',
+    tribalId: "",
+    tribalNotice: "",
   });
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -65,9 +63,15 @@ const AddTribalNotice: React.FC<AddTribalNoticeProps> = ({
   // function that clears form data on submit
   const clearFormData = () => {
     setFormData({
-      tribalId: '',
-      tribalNotice: '',
+      tribalId: "",
+      tribalNotice: "",
     });
+  };
+
+  // Keep context up to date and rerenders when updated.
+  const refreshWebTableDataContext = async () => {
+    const response = await getAllItemsAPI(keys.webTableName);
+    setWebTableData(response);
   };
 
   const handleSubmit = async (event: any) => {
@@ -77,16 +81,16 @@ const AddTribalNotice: React.FC<AddTribalNoticeProps> = ({
     // Perform form submission logic or validation here
     const response = await addTribalNoticeAPI(AddTribalNoticeObj);
 
-    if (response === 'Item added') {
-      enqueueSnackbar('Notice successfully created!', {
-        variant: 'success',
+    if (response === "Item added") {
+      enqueueSnackbar("Notice successfully created!", {
+        variant: "success",
       });
       clearFormData();
-      rerenderNotices();
+      await refreshWebTableDataContext();
     } else {
-      setError('Server error');
-      enqueueSnackbar('Server error, please try again.', {
-        variant: 'error',
+      setError("Server error");
+      enqueueSnackbar("Server error, please try again.", {
+        variant: "error",
       });
     }
     setLoading(false);
@@ -94,9 +98,9 @@ const AddTribalNotice: React.FC<AddTribalNoticeProps> = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormPaper style={{ marginLeft: '0' }}>
+      <FormPaper style={{ marginLeft: "0" }}>
         <FormControl fullWidth>
-          <FormLabel component="h1" sx={{ fontSize: '22px' }}>
+          <FormLabel component="h1" sx={{ fontSize: "22px" }}>
             Create Tribal Notice
           </FormLabel>
           <TextField
@@ -117,7 +121,7 @@ const AddTribalNotice: React.FC<AddTribalNoticeProps> = ({
             fullWidth
             margin="normal"
           />
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: "relative" }}>
             <Button
               type="submit"
               fullWidth
@@ -125,7 +129,7 @@ const AddTribalNotice: React.FC<AddTribalNoticeProps> = ({
               disabled={loading === true}
               sx={{ mt: 3, mb: 2 }}
             >
-              <span style={loading ? { visibility: 'hidden' } : {}}>
+              <span style={loading ? { visibility: "hidden" } : {}}>
                 Create Notice
               </span>
             </Button>
@@ -133,11 +137,11 @@ const AddTribalNotice: React.FC<AddTribalNoticeProps> = ({
               <CircularProgress
                 size={24}
                 sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  marginTop: '-8px',
-                  marginLeft: '-12px',
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  marginTop: "-8px",
+                  marginLeft: "-12px",
                 }}
               />
             )}

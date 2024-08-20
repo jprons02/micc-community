@@ -1,50 +1,20 @@
-import React, { useState, useContext, useEffect } from 'react';
-import AddTribalNotice from '../../components/forms/AddTribalNotice';
-
-//APIs
-import { getAllItemsAPI } from '../../services/APIs/getAllItemsAPI';
-
-// data
-import { keys } from '../../data/keys';
+import React, { useState, useContext, useEffect } from "react";
+import AddTribalNotice from "../../components/forms/AddTribalNotice";
 
 // custom component
-import TribalNoticesList from '../../components/lists/TribalNotices';
-
-// context
-import { SetTribalNoticesContext } from '../../context/tribalNotices';
+import TribalNoticesList from "../../components/lists/TribalNotices";
 
 //material-ui
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
 
 const ManageTribalNotices: React.FC = () => {
-  const setTribalNotices = useContext(SetTribalNoticesContext);
-
-  // rerender when new notice is created so new notice is displayed
-  const [rerender, setRerender] = useState<boolean>(false);
-  const rerenderTribalNotices = () => {
-    setRerender(!rerender);
-  };
-
-  useEffect(() => {
-    tribalNoticesCall();
-  }, [rerender]);
-
-  const tribalNoticesCall = async () => {
-    const response = await getAllItemsAPI(keys.webTableName);
-    // Filter objects with the key "tribalNotice"
-    const tribalNotices = response.filter((obj: any) =>
-      obj.hasOwnProperty('tribalNotice')
-    );
-    setTribalNotices(await tribalNotices);
-  };
-
   return (
     <Container maxWidth="lg">
       <div>
-        <AddTribalNotice rerenderNotices={rerenderTribalNotices} />
+        <AddTribalNotice />
       </div>
-      <div style={{ marginTop: '70px' }}>
-        <h3 style={{ marginBottom: '-20px' }}>Tribal Notices:</h3>
+      <div style={{ marginTop: "70px" }}>
+        <h3 style={{ marginBottom: "-20px" }}>Tribal Notices:</h3>
         <TribalNoticesList />
       </div>
     </Container>

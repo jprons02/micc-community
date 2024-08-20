@@ -1,30 +1,25 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { logInFunction } from '../../services/functions/logInFunction';
-import { useSnackbar } from '../../lib/notistack';
-import useGoogleRecaptcha from '../../hooks/useReCaptcha';
-import { recaptchaTest } from '../../services/functions/recaptchaTest';
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { logInFunction } from "../../services/functions/logInFunction";
+import { useSnackbar } from "../../lib/notistack";
+import useGoogleRecaptcha from "../../hooks/useReCaptcha";
+import { recaptchaTest } from "../../services/functions/recaptchaTest";
 
 // context
-import { SetLoginContext } from '../../context/loginContext';
-import { SetUserContext } from '../../context/userContext';
-import { SetTribalNoticesContext } from '../../context/tribalNotices';
-import { SetCalendarEventsContext } from '../../context/calendarEvents';
+import { SetLoginContext } from "../../context/loginContext";
+import { SetUserContext } from "../../context/userContext";
+import { SetCalendarEventsContext } from "../../context/calendarEvents";
 
 // APIs
-import { getAllItemsAPI } from '../../services/APIs/getAllItemsAPI';
-import { googleCalendarGetEventsAPI } from '../../services/APIs/googleCalendarGetEvents';
-
-// data
-import { keys } from '../../data/keys';
+import { googleCalendarGetEventsAPI } from "../../services/APIs/googleCalendarGetEvents";
 
 // material-ui
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import CircularProgress from '@mui/material/CircularProgress';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import { FormPaper } from '../../assets/styles/styledComponents/formPaper';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import { FormPaper } from "../../assets/styles/styledComponents/formPaper";
 
 const LoginForm: React.FC = () => {
   let navigate = useNavigate();
@@ -33,7 +28,6 @@ const LoginForm: React.FC = () => {
   const setIsLoggedIn = useContext(SetLoginContext);
   const setUser = useContext(SetUserContext);
   const setCalendarEvents = useContext(SetCalendarEventsContext);
-  const setTribalNotices = useContext(SetTribalNoticesContext);
 
   // variant could be success, error, warning, info, or default
   // example use) enqueueSnackbar("Form submitted successfully!", { variant: "success" });
@@ -45,9 +39,9 @@ const LoginForm: React.FC = () => {
     password: string;
   };
   const [formData, setFormData] = useState<formData>({
-    email: '',
-    tribalId: '',
-    password: '',
+    email: "",
+    tribalId: "",
+    password: "",
   });
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -75,58 +69,53 @@ const LoginForm: React.FC = () => {
     setCalendarEvents(await response);
   };
 
-  const tribalNoticesCall = async () => {
-    const response = await getAllItemsAPI(keys.webTableName);
-    setTribalNotices(await response);
-  };
-
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setLoading(true);
     // Perform form submission logic or validation here
     const result = await logInFunction(formData);
 
-    if ('message' in result) {
+    if ("message" in result) {
       switch (result.message) {
-        case 'Success':
+        case "Success":
           setLoading(false);
           setIsLoggedIn(true);
           setUser(result.data);
-          navigate('/home');
+          navigate("/home");
           calendarEventsCall();
-          tribalNoticesCall();
+          //tribalNoticesCall();
           enqueueSnackbar("You've successfully logged in!", {
-            variant: 'success',
+            variant: "success",
           });
           break;
-        case 'Email not found':
-          setError('Email not found');
+        case "Email not found":
+          setError("Email not found");
           setLoading(false);
-          enqueueSnackbar('Email not found', { variant: 'error' });
+          enqueueSnackbar("Email not found", { variant: "error" });
           break;
-        case 'Incorrect password':
-          setError('Incorrect password');
+        case "Incorrect password":
+          setError("Incorrect password");
           setLoading(false);
-          enqueueSnackbar('Incorrect password', { variant: 'error' });
+          enqueueSnackbar("Incorrect password", { variant: "error" });
           break;
-        case 'Incorrect tribalId':
-          setError('Incorrect tribalId');
+        case "Incorrect tribalId":
+          setError("Incorrect tribalId");
           setLoading(false);
-          enqueueSnackbar('Incorrect tribalId', { variant: 'error' });
+          enqueueSnackbar("Incorrect tribalId", { variant: "error" });
           break;
         default:
-          setError('Server error');
+          setError("Server error");
           setLoading(false);
-          console.log('result server error: ', result);
-          enqueueSnackbar('Server error, please try again.', {
-            variant: 'error',
+          console.log("result server error: ", result);
+          enqueueSnackbar("Server error, please try again.", {
+            variant: "error",
           });
       }
     } else {
-      setError('Server error');
+      setError("Server error");
       setLoading(false);
-      enqueueSnackbar('Server error, please try again.', {
-        variant: 'error',
+      enqueueSnackbar("Server error, please try again.", {
+        variant: "error",
       });
     }
   };
@@ -135,7 +124,7 @@ const LoginForm: React.FC = () => {
     <form onSubmit={handleSubmit}>
       <FormPaper>
         <FormControl fullWidth>
-          <FormLabel component="h1" sx={{ fontSize: '22px' }}>
+          <FormLabel component="h1" sx={{ fontSize: "22px" }}>
             Log In
           </FormLabel>
           <TextField
@@ -169,7 +158,7 @@ const LoginForm: React.FC = () => {
             margin="normal"
           />
           {renderReCAPTCHA()}
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: "relative" }}>
             <Button
               type="submit"
               fullWidth
@@ -177,7 +166,7 @@ const LoginForm: React.FC = () => {
               disabled={loading === true || recaptchaResult !== true}
               sx={{ mt: 3, mb: 2 }}
             >
-              <span style={loading ? { visibility: 'hidden' } : {}}>
+              <span style={loading ? { visibility: "hidden" } : {}}>
                 Log In
               </span>
             </Button>
@@ -185,17 +174,17 @@ const LoginForm: React.FC = () => {
               <CircularProgress
                 size={24}
                 sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  marginTop: '-8px',
-                  marginLeft: '-12px',
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  marginTop: "-8px",
+                  marginLeft: "-12px",
                 }}
               />
             )}
           </div>
           {/* USING ANCHOR IN STEAD OF LINK SO THAT THE RECAPTCHA IFRAME LOADS CORRECTLY */}
-          <div style={{ textAlign: 'center', margin: '20px 0 15px 0' }}>
+          <div style={{ textAlign: "center", margin: "20px 0 15px 0" }}>
             <a href="/forgot-password">Forgot password?</a>
             &nbsp;&nbsp;
             <a href="/signup">Don't have an account? Sign Up</a>

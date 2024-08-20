@@ -3,14 +3,7 @@ import { Container, Typography, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 // context
-import { SnackbarContext } from "../context/snackbar";
-import { SetSnackbarContext } from "../context/snackbar";
-
-// api
-import { getAllItemsAPI } from "../services/APIs/getAllItemsAPI";
-
-// data
-import { keys } from "../data/keys";
+import { WebTableDataContext } from "../context/webTableContext";
 
 // Define the shape of menu items
 interface MenuItem {
@@ -56,31 +49,24 @@ const renderMenuSection = (title: string, items: MenuItem[]) => (
 
 // SnackBar component
 const SnackBar: React.FC = () => {
-  const snackbarInfo = useContext(SnackbarContext);
-  const setSnackbarInfo = useContext(SetSnackbarContext);
+  const webTableData = useContext(WebTableDataContext);
+  const snackbarInfo = () => {
+    return (
+      webTableData.find((record: any) => record.id === "snackbar") ||
+      "Loading..."
+    );
+  };
 
   // rerender when new notice is created so new notice is displayed
   const [rerender, setRerender] = useState<boolean>(false);
-  const rerenderSnackbarInfo = () => {
-    setRerender(!rerender);
-  };
 
-  useEffect(() => {
-    snackbarCall();
-  }, [rerender]);
-
-  const snackbarCall = async () => {
-    const response = await getAllItemsAPI(keys.webTableName);
-    // Filter objects with the key "emergencyNotice"
-    const snackbarRecord = response.find((obj: any) => obj.id === "snackbar");
-    setSnackbarInfo(await snackbarRecord);
-  };
+  useEffect(() => {}, [rerender]);
 
   // Define menu items
   const specialMenuItems: MenuItem[] = [
     {
-      name: snackbarInfo.snackbarSpecial || "Loading...",
-      price: `$${snackbarInfo.snackbarSpecialPrice}` || "Loading...",
+      name: snackbarInfo().snackbarSpecial,
+      price: `$${snackbarInfo().snackbarSpecialPrice}`,
     },
   ];
   const mainMenuItems: MenuItem[] = [
@@ -135,7 +121,9 @@ const SnackBar: React.FC = () => {
     <Container>
       <div>THIS IS NOT LIVE - PRICES/ITEMS ARE NOT REAL</div>
       <div style={{ marginTop: "20px", marginBottom: "65px" }}>
-        {snackbarInfo.snackbarStatus === "open" ? openSnackBar() : closedSnackBar()}
+        {snackbarInfo().snackbarStatus === "open"
+          ? openSnackBar()
+          : closedSnackBar()}
       </div>
       <div style={{ marginTop: "20px", marginBottom: "65px" }}>
         {/* Section for a call here to order paragraph */}
