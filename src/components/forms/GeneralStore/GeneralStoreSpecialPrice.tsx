@@ -20,14 +20,14 @@ import { keys } from "../../../data/keys";
 // context
 import { SetWebTableDataContext } from "../../../context/webTableContext";
 
-const SnackbarSpecialPriceForm: React.FC = () => {
+const GeneralStoreSpecialPriceForm: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [snackbarSpecialPrice, setSnackbarSpecialPrice] = useState("");
+  const [generalStoreSpecialPrice, setGeneralStoreSpecialPrice] = useState("");
   const [loading, setLoading] = useState(false);
   const setWebTableData = useContext(SetWebTableDataContext);
 
   const clearForm = () => {
-    setSnackbarSpecialPrice("");
+    setGeneralStoreSpecialPrice("");
   };
 
   // Keep context up to date and rerenders when updated.
@@ -37,14 +37,14 @@ const SnackbarSpecialPriceForm: React.FC = () => {
   };
 
   const handleChange = (event: any) => {
-    setSnackbarSpecialPrice(event.target.value);
+    setGeneralStoreSpecialPrice(event.target.value);
   };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    // Check if snackbarSpecialPrice is empty
-    if (!snackbarSpecialPrice.trim()) {
+    // Check if generalStoreSpecialPrice is empty
+    if (!generalStoreSpecialPrice.trim()) {
       enqueueSnackbar("Restaurant status cannot be empty.", {
         variant: "error",
       });
@@ -53,19 +53,19 @@ const SnackbarSpecialPriceForm: React.FC = () => {
 
     setLoading(true);
 
-    const snackbarSpecialPriceObj: updateRecordObjType = {
+    const generalStoreSpecialPriceObj: updateRecordObjType = {
       table: keys.webTableName, // replace with your table name
-      id: "snackbar",
+      id: "generalStore",
       attributeObj: {
-        name: "snackbarSpecialPrice",
-        value: snackbarSpecialPrice,
+        name: "generalStoreSpecialPrice",
+        value: generalStoreSpecialPrice,
       },
     };
 
     try {
-      const response = await updateRecordAPI(snackbarSpecialPriceObj);
+      const response = await updateRecordAPI(generalStoreSpecialPriceObj);
       if (response === "Item updated") {
-        enqueueSnackbar("Snackbar Special Price Updated.", {
+        enqueueSnackbar("General Store Special Price Updated.", {
           variant: "success",
         });
         await refreshWebTableDataContext();
@@ -85,11 +85,11 @@ const SnackbarSpecialPriceForm: React.FC = () => {
       <FormPaper style={{ marginLeft: "0" }}>
         <FormControl fullWidth>
           <FormLabel component="h1" sx={{ fontSize: "22px" }}>
-            Update Snackbar Special Price
+            Update General Store Special Price
           </FormLabel>
           <TextField
-            label="Snackbar Special Price"
-            value={snackbarSpecialPrice}
+            label="General Store Special Price"
+            value={generalStoreSpecialPrice}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -125,4 +125,4 @@ const SnackbarSpecialPriceForm: React.FC = () => {
   );
 };
 
-export default SnackbarSpecialPriceForm;
+export default GeneralStoreSpecialPriceForm;

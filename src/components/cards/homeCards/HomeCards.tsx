@@ -11,6 +11,7 @@ import { UserContext } from "../../../context/userContext";
 // material-ui
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { link } from "fs";
 
 const HomeCards: React.FC = () => {
   const user = useContext(UserContext);
@@ -52,6 +53,12 @@ const HomeCards: React.FC = () => {
       color: "#511283",
       disabled: false,
     },
+    {
+      title: "General Store",
+      link: "/generalstore",
+      color: "#831283",
+      disabled: false,
+    },
     { title: "Fire", link: "", color: "#C23B3B", disabled: true },
     { title: "Police", link: "", color: "#17217B", disabled: true },
     { title: "School", link: "", color: "#6D9CE4", disabled: true },
@@ -85,6 +92,11 @@ const HomeCards: React.FC = () => {
     {
       title: "Manage Snackbar Info",
       link: "/admin/managesnackbar",
+      disabled: isAdmin() ? false : true,
+    },
+    {
+      title: "Manage General Store",
+      link: "/admin/managegeneralstore",
       disabled: isAdmin() ? false : true,
     },
   ];

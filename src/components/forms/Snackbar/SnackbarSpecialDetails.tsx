@@ -20,10 +20,6 @@ import { keys } from "../../../data/keys";
 // context
 import { SetWebTableDataContext } from "../../../context/webTableContext";
 
-type SnackbarSpecialFormProps = {
-  rerenderSnackbarInfo: () => void;
-};
-
 const SnackbarSpecialForm: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [snackbarSpecial, setSnackbarSpecial] = useState("");

@@ -48,11 +48,11 @@ const renderMenuSection = (title: string, items: MenuItem[]) => (
 );
 
 // SnackBar component
-const SnackBar: React.FC = () => {
+const GeneralStore: React.FC = () => {
   const webTableData = useContext(WebTableDataContext);
-  const snackbarInfo = () => {
+  const generalStoreInfo = () => {
     return (
-      webTableData.find((record: any) => record.id === "snackbar") ||
+      webTableData.find((record: any) => record.id === "generalStore") ||
       "Loading..."
     );
   };
@@ -60,8 +60,8 @@ const SnackBar: React.FC = () => {
   // Define menu items
   const specialMenuItems: MenuItem[] = [
     {
-      name: snackbarInfo().snackbarSpecial,
-      price: `$${snackbarInfo().snackbarSpecialPrice}`,
+      name: generalStoreInfo().generalStoreSpecial,
+      price: `$${generalStoreInfo().generalStoreSpecialPrice}`,
     },
   ];
   const mainMenuItems: MenuItem[] = [
@@ -80,62 +80,21 @@ const SnackBar: React.FC = () => {
     { name: "Dr. Pepper", price: "$1.99" },
   ];
 
-  const closedSnackBar = () => {
-    return (
-      <Typography
-        variant="h3"
-        style={{
-          fontSize: "30px",
-          fontWeight: "bold",
-          color: "red",
-          textAlign: "center",
-        }}
-      >
-        CLOSED
-      </Typography>
-    );
-  };
-
-  const openSnackBar = () => {
-    return (
-      <Typography
-        variant="h3"
-        style={{
-          fontSize: "30px",
-          fontWeight: "bold",
-          color: "green",
-          textAlign: "center",
-        }}
-      >
-        OPEN
-      </Typography>
-    );
-  };
-
   return (
     <Container>
       <div>THIS IS NOT LIVE - PRICES/ITEMS ARE NOT REAL</div>
-      <div style={{ marginTop: "20px", marginBottom: "65px" }}>
-        {snackbarInfo().snackbarStatus === "open"
-          ? openSnackBar()
-          : closedSnackBar()}
-      </div>
       <div style={{ marginTop: "20px", marginBottom: "65px" }}>
         {/* Section for a call here to order paragraph */}
         <Typography
           variant="h4"
           style={{ fontSize: "20px", fontWeight: "bold" }}
         >
-          Recreation Snack Bar
+          General Store
         </Typography>
-        <p>Dial ext. #5234 to order</p>
       </div>
       {renderMenuSection("Daily Special", specialMenuItems)}
-      {renderMenuSection("Main", mainMenuItems)}
-      {renderMenuSection("Snacks", snackMenuItems)}
-      {renderMenuSection("Drinks", drinkMenuItems)}
     </Container>
   );
 };
 
-export default SnackBar;
+export default GeneralStore;
