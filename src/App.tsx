@@ -3,7 +3,14 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 // custom component
 import LoggedIn from "./components/wrappers/LoggedIn";
-import VerifyAdmin from "./components/wrappers/VerifyAdmin";
+
+// Admin wrappers
+//import VerifyAdmin from "./components/wrappers/VerifyAdmin";
+import VerifyTribalAdmin from "./components/wrappers/VerifyTribalAdmin";
+import VerifySnackbarAdmin from "./components/wrappers/VerifySnackbarAdmin";
+import VerifyGeneralStoreAdmin from "./components/wrappers/VerifyGeneralStoreAdmin";
+import VerifyEmergencyAdmin from "./components/wrappers/VerifyEmergencyAdmin";
+
 import LogoutButton from "./components/header/LogoutButton";
 import LoginButton from "./components/header/LoginButton";
 import HomeButton from "./components/header/HomeButton";
@@ -159,9 +166,9 @@ const App: React.FC = () => {
           path="/admin/tribal-notices"
           element={
             <LoggedIn>
-              <VerifyAdmin>
+              <VerifyTribalAdmin>
                 <ManageTribalNotices />
-              </VerifyAdmin>
+              </VerifyTribalAdmin>
             </LoggedIn>
           }
         />
@@ -169,9 +176,9 @@ const App: React.FC = () => {
           path="/admin/emergency-notices"
           element={
             <LoggedIn>
-              <VerifyAdmin>
+              <VerifyEmergencyAdmin>
                 <ManageEmergencyNotices />
-              </VerifyAdmin>
+              </VerifyEmergencyAdmin>
             </LoggedIn>
           }
         />
@@ -179,9 +186,9 @@ const App: React.FC = () => {
           path="/admin/managesnackbar"
           element={
             <LoggedIn>
-              <VerifyAdmin>
+              <VerifySnackbarAdmin>
                 <ManageSnackbar />
-              </VerifyAdmin>
+              </VerifySnackbarAdmin>
             </LoggedIn>
           }
         />
@@ -189,9 +196,9 @@ const App: React.FC = () => {
           path="/admin/managegeneralstore"
           element={
             <LoggedIn>
-              <VerifyAdmin>
+              <VerifyGeneralStoreAdmin>
                 <ManageGeneralStore />
-              </VerifyAdmin>
+              </VerifyGeneralStoreAdmin>
             </LoggedIn>
           }
         />

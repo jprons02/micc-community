@@ -13,20 +13,18 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { link } from "fs";
 
+import {
+  isGeneralStoreAdmin,
+  isEmergencyAdmin,
+  isSnackbarAdmin,
+  isTribalAdmin,
+} from "../../../services/functions/isAdmin";
+
 const HomeCards: React.FC = () => {
   const user = useContext(UserContext);
   const theme = useTheme();
   const desktop = useMediaQuery(theme.breakpoints.up("sm"));
   let navigate = useNavigate();
-
-  const isAdmin = () => {
-    if (user.type) {
-      if (user.type === "admin") {
-        return true;
-      }
-    }
-    return false;
-  };
 
   const standardServices = [
     {
@@ -82,22 +80,22 @@ const HomeCards: React.FC = () => {
     {
       title: "Manage Emergency Notices",
       link: "/admin/emergency-notices",
-      disabled: isAdmin() ? false : true,
+      disabled: isEmergencyAdmin(user) ? false : true,
     },
     {
       title: "Manage Tribal Notices",
       link: "/admin/tribal-notices",
-      disabled: isAdmin() ? false : true,
+      disabled: isTribalAdmin(user) ? false : true,
     },
     {
       title: "Manage Snackbar Info",
       link: "/admin/managesnackbar",
-      disabled: isAdmin() ? false : true,
+      disabled: isSnackbarAdmin(user) ? false : true,
     },
     {
       title: "Manage General Store",
       link: "/admin/managegeneralstore",
-      disabled: isAdmin() ? false : true,
+      disabled: isGeneralStoreAdmin(user) ? false : true,
     },
   ];
 

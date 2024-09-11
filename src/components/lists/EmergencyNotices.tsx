@@ -19,20 +19,12 @@ import { UserContext } from "../../context/userContext";
 
 // api
 import { getAllItemsAPI } from "../../services/APIs/getAllItemsAPI";
+import { isEmergencyAdmin } from "../../services/functions/isAdmin";
 
 const EmergencyNoticesList: React.FC = () => {
   const user = useContext(UserContext);
   const webTableData = useContext(WebTableDataContext);
   const setWebTableData = useContext(SetWebTableDataContext);
-
-  const isAdmin = () => {
-    if (user.type) {
-      if (user.type === "admin") {
-        return true;
-      }
-    }
-    return false;
-  };
 
   const emergencyNotices = (): any => {
     return webTableData.filter(
@@ -104,7 +96,7 @@ const EmergencyNoticesList: React.FC = () => {
 
   const renderDeleteButton = (id: string) => {
     // if user is admin, show delete button
-    if (!isAdmin()) return null;
+    if (!isEmergencyAdmin(user.type)) return null;
 
     return (
       <div style={{ display: "flex", alignItems: "center" }}>

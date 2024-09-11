@@ -21,20 +21,12 @@ import { getAllItemsAPI } from "../../services/APIs/getAllItemsAPI";
 import { WebTableDataContext } from "../../context/webTableContext";
 import { SetWebTableDataContext } from "../../context/webTableContext";
 import { UserContext } from "../../context/userContext";
+import { isTribalAdmin } from "../../services/functions/isAdmin";
 
 const TribalNoticesList: React.FC = () => {
   const user = useContext(UserContext);
   const webTableData = useContext(WebTableDataContext);
   const setWebTableData = useContext(SetWebTableDataContext);
-
-  const isAdmin = () => {
-    if (user.type) {
-      if (user.type === "admin") {
-        return true;
-      }
-    }
-    return false;
-  };
 
   const tribalNotices = () => {
     return webTableData
@@ -110,7 +102,7 @@ const TribalNoticesList: React.FC = () => {
 
   const renderDeleteButton = (id: string) => {
     // if user is admin, show delete button
-    if (!isAdmin()) return null;
+    if (!isTribalAdmin(user.type)) return null;
 
     return (
       <div style={{ display: "flex", alignItems: "center" }}>

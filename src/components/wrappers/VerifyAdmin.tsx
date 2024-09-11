@@ -1,3 +1,7 @@
+export {};
+
+/*
+THE OLD VERSION OF VERIFYADMIN WRAPPER. THIS IS NO LONGER USED IN THE PROJECT.
 // Wrapper for all pages that need to be type admin to view. Wraps in main App component.
 
 import React, { useEffect, useContext } from 'react';
@@ -36,3 +40,4 @@ const VerifyAdmin: React.FC<VerifyAdminProps> = ({ children }) => {
 };
 
 export default VerifyAdmin;
+*/

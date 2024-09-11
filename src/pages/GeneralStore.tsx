@@ -82,7 +82,6 @@ const GeneralStore: React.FC = () => {
 
   return (
     <Container>
-      <div>THIS IS NOT LIVE - PRICES/ITEMS ARE NOT REAL</div>
       <div style={{ marginTop: "20px", marginBottom: "65px" }}>
         {/* Section for a call here to order paragraph */}
         <Typography
