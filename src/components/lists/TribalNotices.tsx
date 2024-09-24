@@ -102,7 +102,7 @@ const TribalNoticesList: React.FC = () => {
 
   const renderDeleteButton = (id: string) => {
     // if user is admin, show delete button
-    if (!isTribalAdmin(user.type)) return null;
+    if (!isTribalAdmin(user)) return null;
 
     return (
       <div style={{ display: "flex", alignItems: "center" }}>
@@ -129,6 +129,7 @@ const TribalNoticesList: React.FC = () => {
     );
   };
 
+  /* wihout sorting
   const renderTribalNotices = () => {
     if (!tribalNotices() || tribalNotices().length === 0)
       return <p style={{ marginTop: "30px" }}>No tribal notices listed.</p>;
@@ -167,6 +168,55 @@ const TribalNoticesList: React.FC = () => {
             );
           }
         });
+  };
+  */
+
+  const renderTribalNotices = () => {
+    const notices = tribalNotices();
+
+    if (!notices || notices.length === 0) {
+      return <p style={{ marginTop: "30px" }}>No tribal notices listed.</p>;
+    }
+
+    // Sort the tribal notices by dateAdded in descending order (most recent first)
+    const sortedNotices = notices.sort((a: any, b: any) => {
+      return new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime();
+    });
+
+    return sortedNotices.map((notice: any, index: number) => {
+      const dateTime = getReadableDate(notice.dateAdded);
+
+      if (notice.tribalNotice === "" || notice.tribalNotice === null) {
+        return null;
+      } else {
+        return (
+          <div style={{ marginTop: "40px" }} key={notice.dateAdded}>
+            <p>{notice.tribalNotice}</p>
+            <p
+              style={{
+                fontSize: "12px",
+                fontStyle: "italic",
+                marginBottom: "-6px",
+              }}
+            >
+              {dateTime}
+            </p>
+            <p
+              style={{
+                fontSize: "12px",
+                fontStyle: "italic",
+              }}
+            >
+              {notice.name}
+            </p>
+            {renderDeleteButton(notice.id)}
+            {Array.isArray(notices) &&
+              notices.length > 1 &&
+              index !== notices.length - 1 && <HorizontalRule />}
+          </div>
+        );
+      }
+    });
   };
 
   return <div style={{ paddingBottom: "40px" }}>{renderTribalNotices()}</div>;

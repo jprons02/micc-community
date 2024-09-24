@@ -96,7 +96,7 @@ const EmergencyNoticesList: React.FC = () => {
 
   const renderDeleteButton = (id: string) => {
     // if user is admin, show delete button
-    if (!isEmergencyAdmin(user.type)) return null;
+    if (!isEmergencyAdmin(user)) return null;
 
     return (
       <div style={{ display: "flex", alignItems: "center" }}>
@@ -123,6 +123,7 @@ const EmergencyNoticesList: React.FC = () => {
     );
   };
 
+  /* without sorting
   const renderEmergencyNotices = () => {
     if (!emergencyNotices()) {
       return <p style={{ marginTop: "30px" }}>No emergencies listed.</p>;
@@ -144,6 +145,88 @@ const EmergencyNoticesList: React.FC = () => {
         }
         return null;
       };
+      const renderResourceLinks = () => {
+        if (
+          notice.emergencyNotice &&
+          notice.emergencyNotice.resourceLinks[0] !== ""
+        ) {
+          return (
+            <p style={{ fontSize: "14px", marginBottom: "30px" }}>
+              {notice.emergencyNotice ? resourceLinksArray() : "Loading"}
+            </p>
+          );
+        }
+        return null;
+      };
+
+      return (
+        <div style={{ marginTop: "40px" }} key={notice.id || "defaultKey"}>
+          <p style={{ fontSize: "20px" }}>
+            {notice.emergencyNotice
+              ? notice.emergencyNotice.title
+              : "Loading..."}
+          </p>
+          <p>
+            {notice.emergencyNotice
+              ? notice.emergencyNotice.details
+              : "Loading"}
+          </p>
+          {renderResourceLinks()}
+          <p
+            style={{
+              fontSize: "12px",
+              fontStyle: "italic",
+              marginBottom: "-6px",
+            }}
+          >
+            {dateTime}
+          </p>
+          <p
+            style={{
+              fontSize: "12px",
+              fontStyle: "italic",
+            }}
+          >
+            {notice.name}
+          </p>
+          {renderDeleteButton(notice.id)}
+          {Array.isArray(emergencyNotices()) &&
+            emergencyNotices().length > 1 &&
+            index !== emergencyNotices().length - 1 && <HorizontalRule />}
+        </div>
+      );
+    });
+  };
+  */
+
+  const renderEmergencyNotices = () => {
+    if (!emergencyNotices()) {
+      return <p style={{ marginTop: "30px" }}>No emergencies listed.</p>;
+    }
+
+    // Sort the notices by dateAdded in descending order (most recent first)
+    const sortedNotices = emergencyNotices().sort((a: any, b: any) => {
+      return new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime();
+    });
+
+    return sortedNotices.map((notice: any, index: number) => {
+      const dateTime = getReadableDate(notice.dateAdded);
+      const resourceLinksArray = () => {
+        if (notice.emergencyNotice && notice.emergencyNotice.resourceLinks) {
+          return notice.emergencyNotice.resourceLinks.map((link: string) => {
+            return (
+              <React.Fragment key={link}>
+                <a href={link} target="_blank" rel="noopener noreferrer">
+                  {link}
+                </a>
+                <br />
+              </React.Fragment>
+            );
+          });
+        }
+        return null;
+      };
+
       const renderResourceLinks = () => {
         if (
           notice.emergencyNotice &&
